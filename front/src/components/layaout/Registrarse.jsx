@@ -1,14 +1,14 @@
 import React, { Component, useState } from "react";
 import HelperForm from "../../herlpers/HelperForm";
 import { Global } from "../../herlpers/Global";
-
+import image from "../../assets/images/bg-registration-form-2.jpg"
 
 //login del usuario
-const Registro = () => {
+const Registrarse = () => {
   
   return (
     <>
-     <div className="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+     <div className="wrapper" style={{backgroundImage: {image}}}>
 			<div className="inner">
 				<form action="">
 					<h3>Registration Form</h3>
@@ -48,4 +48,4 @@ const Registro = () => {
   );
 };
 
-export default Registro;
+export default Registrarse;

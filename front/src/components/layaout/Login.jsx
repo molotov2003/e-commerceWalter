@@ -1,14 +1,14 @@
 import React, { Component, useState } from "react";
 import HelperForm from "../../herlpers/HelperForm";
 import { Global } from "../../herlpers/Global";
-
+import image from "../../assets/images/bg-registration-form-2.jpg"
 
 //login del usuario
 const Login = () => {
   
   return (
     <>
-    <div className="wrapper" style="background-image: url('images/bg-registration-form-2.jpg');">
+    <div className="wrapper" style={{backgroundImage: {image}, alignItems: "center", alignContent: "center", textAlign: "center", }}>
 			<div className="inner">
 				<form action="">
 					<h3>Iniciar sesion</h3>
