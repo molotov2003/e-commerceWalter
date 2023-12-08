@@ -1,20 +1,23 @@
 import React from "react";
-
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Login from "../components/layaout/Login";
-import Registrarse from "../components/layaout/Registrarse"
-//import { AuthProvider } from "../context/AuthProvider";
-//import LayaoutPublico from "../components/layaout/LayaoutPublico";
-
-const Routing =()=>{
+import Registro from "../components/layaout/Registro"
+import Inicio from "../components/public/inicio";
+import Carrito from "../components/public/Carrito";
+import Producto from "../components/public/Producto";
+const Routing = () => {
+  //Creacion del sistema de rutas
+  return (
     <BrowserRouter>
-     
-      <Routes >
-          <Route path="/" element={<Login/>} />    
-          <Route path="/Registrarse" element={<Registrarse/>} />    
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/Registro" element={<Registro />}></Route>
+        <Route path="/Inicio" element={<Inicio />}></Route>
+        <Route path="/Carrito" element={<Carrito />}></Route>
+        <Route path="/Producto" element={<Producto />}></Route>
       </Routes>
-               
     </BrowserRouter>
-}
+  );
+};
 
 export default Routing;

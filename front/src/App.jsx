@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import './App.css'
 import Routing from "./router/Routing";
-function App() {
 
+function App() {
   return (
     <>
-       <Routing/>
+       return <Routing />;
     </>
   )
 }
