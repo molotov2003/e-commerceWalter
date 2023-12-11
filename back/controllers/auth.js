@@ -16,6 +16,7 @@ const auth = async (req, res, next) => {
     const payload = await jwt.verify(jwtToken,SECRET_KEY);
     req.user = payload;
     next();
+    
   } catch (error) {
     return res.status(401).json({
       resultado: "error",

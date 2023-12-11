@@ -1,4 +1,4 @@
-const mysql = require("mysql"); //instanciamos el modulo MYSQL
+const mysql = require("mysql2"); //instanciamos el modulo MYSQL
 
 //Creamos la conexion
 const conexion = mysql.createConnection({
@@ -12,7 +12,7 @@ const conexion = mysql.createConnection({
 
 conexion.connect((error) => {
   if (error) {
-    throw "existe un error en la cadena de conexion !";
+    return "existe un error en la cadena de conexion !";
   } else {
     console.log("Conexión Exitosa !");
   }

@@ -8,6 +8,10 @@ const cors = require('cors'); // Importa el middleware cors
 
 
 
+
+// Middleware para analizar el cuerpo de la solicitud
+app.use(express.json());
+
 //Middleware para manejar datos JSON
 app.use(bodyParser.json())
 
