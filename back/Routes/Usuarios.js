@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
 
 const uploads = multer({ storage });
 
-
+/* RUTAS DEL CONTROLADOR USUARIO */
 router.post("/insertar",usuarioControlador.insertarUsuario)
+router.post("/login",usuarioControlador.loginUsuario)
 module.exports = router;
