@@ -18,10 +18,6 @@ const storage = multer.diskStorage({
 
 const uploads = multer({ storage });
 
-/* router.post("usuarios/registrar", usuarioControlador.usuario); */
-// router.get("/publicacion/detallePublicacion/:id", auth, publicacionControlador.detallePublicacion);
-// router.delete("/publicacion/eliminarPublicacion/:id", auth, publicacionControlador.eliminarPublicacion);
-// router.get("/publicacion/listarTodas/:page", auth, publicacionControlador.listarTodas);
 
 router.post("/insertar",usuarioControlador.insertarUsuario)
 module.exports = router;

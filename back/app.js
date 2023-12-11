@@ -6,7 +6,7 @@ const bodyParser=require("body-parser")
 const cors = require('cors'); // Importa el middleware cors
 /* require("dotenv/config"); */
 
-/* app.use("/", require("./controllers/usuarios")); */ //redirigimos al modulo PRODUCTO
+
 
 //Middleware para manejar datos JSON
 app.use(bodyParser.json())
