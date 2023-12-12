@@ -1,6 +1,4 @@
 const bcrypt = require("bcrypt");
-const multer = require("multer");
-const nodemailer = require("nodemailer");
 /* const secret = process.env.secret; */
 const secret = "tu_clave_secreta"; // Reemplaza con tu clave secreta real
 const jwt = require("jsonwebtoken");
@@ -11,6 +9,8 @@ const util = require("util"); //la trae por defecto node js me permite usar asyn
 const { json } = require("body-parser");
 const baseDeDatosQuery = util.promisify(baseDeDatos.query).bind(baseDeDatos);
 const dotenv = require('dotenv');
+const enviarCorreoElectronico=require("../functions/EnviarCorreo")
+const generarCodigoAcceso=require("../functions/generarCodigoAcceso").default
 // Cargar variables de entorno desde el archivo .env
 dotenv.config();
 
@@ -256,33 +256,6 @@ exports.loginUsuario = async (req, res) => {
   }
 };
 
-function generarCodigoAcceso () {
-  // Lógica para generar un código de acceso, por ejemplo, un número aleatorio
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
 
-function enviarCorreoElectronico(destinatario,codigoAcceso){
-  
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
 
-  const mailOptions = {
-   /*  from: 'msmario1722@gmail.com', */
-    to: destinatario,
-    subject: 'Código de Acceso',
-    text: `Ingresa este codigo de verificacion para iniciar sesion:${codigoAcceso}`,
-  };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error al enviar el correo:', error);
-    } else {
-      console.log('Correo enviado:', info.response);
-    }
-  });
-}

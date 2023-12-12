@@ -5,7 +5,7 @@ const conexion = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "e-commerce2",
+  database: "e-commerce",
 });
 
 //Nos conectamos a la BD
