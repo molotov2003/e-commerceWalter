@@ -1,75 +1,113 @@
 const { response } = require("express");
 const baseDeDatos = require("../modules/Conexion");
 const jwtVerified = require("./jwtVerified");
+const multer = require('multer');
 
-//controllador de insertar productos
+//funcion multer para subir imagenes
+const configurarMulter = () => {
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './images'); // Carpeta donde se almacenarán las imágenes
+    },
+    filename: (req, file, cb) => {
+      const fileName = `${Date.now()}-${file.originalname}`;
+      cb(null, fileName);
+    },
+  });
 
-exports.insertarProductos = async (req, res) => {
-  try {
-    const data = {
-      producto_id: req.body.producto_id,
-      nombre_producto: req.body.nombre_producto,
-      descripcion_producto: req.body.descripcion_producto,
-      precio_producto: req.body.precio_producto,
-      stock_producto: req.body.stock_producto,
-      img: req.body.img,
-    };
-    //Validamos los datos
-    if (
-      !data.nombre_producto ||
-      !data.descripcion_producto ||
-      !data.precio_producto ||
-      !data.stock_producto ||
-      !data.img
-    ) {
-      return res.status(400).json({
-        error: true,
-        mensaje: "debe llenar todos los campos",
-        return: false,
-      });
-    }
-    // Consulta SQL parametrizada
-    const sql =
-      "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img) VALUES (?, ?, ?, ?, ?, ?)";
-    baseDeDatos.query(
-      sql,
-      [
-        data.producto_id,
-        data.nombre_producto,
-        data.descripcion_producto,
-        data.precio_producto,
-        data.stock_producto,
-        data.img,
-      ],
-      (error, response) => {
-        try {
-          if (error) {
-            return res.status(400).json({
-              error: true,
-              mensaje: "Error al insertar los productos",
-              return: false,
-            });
-          } else {
-            return res.status(200).json({
-              response: response,
-              mensaje: "producto agregado correctamente",
-              return: true,
-            });
-          }
-        } catch (error) {
-          console.error("Error interno:", error.message);
-          return res.status(500).json({
-            error: true,
-            mensaje: "Error interno del servidor",
-          });
-        }
-      }
-    );
-  } catch (error) {
-    return res.status(500).json({ error: "datos Invalidos" });
-  }
+  return multer({ storage: storage }).single('img');
 };
 
+//controllador de insertar productos
+exports.insertarProductos = async (req, res) => {
+  try {
+    const upload = configurarMulter();
+    upload(req, res, async (err) => {
+  
+      if (err instanceof multer.MulterError) {
+        // Ocurrió un error de Multer
+        return res.status(400).json({
+          error: err.message,
+          mensaje: "Error al cargar la imagen",
+          return: false,
+        });
+      } else if (err) {
+        // Otro tipo de error
+        return res.status(500).json({
+          error: err.message,
+          mensaje: "Error interno del servidor",
+          return: false,
+        });
+      }
+
+      const data = {
+        producto_id: req.body.producto_id,
+        nombre_producto: req.body.nombre_producto,
+        descripcion_producto: req.body.descripcion_producto,
+        precio_producto: req.body.precio_producto,
+        stock_producto: req.body.stock_producto,
+        img: req.file.filename, // Nombre del archivo de imagen cargado
+      };
+
+      // Validamos los datos
+      if (
+        !data.nombre_producto ||
+        !data.descripcion_producto ||
+        !data.precio_producto ||
+        !data.stock_producto ||
+        !data.img
+      ) {
+        return res.status(400).json({
+          error: true,
+          mensaje: "Debe llenar todos los campos",
+          return: false,
+        });
+      }
+
+      // Consulta SQL parametrizada
+      const sql =
+        "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img) VALUES (?, ?, ?, ?, ?, ?)";
+
+      baseDeDatos.query(
+        sql,
+        [
+          data.producto_id,
+          data.nombre_producto,
+          data.descripcion_producto,
+          data.precio_producto,
+          data.stock_producto,
+          data.img,
+        ],
+        (error, response) => {
+          try {
+            if (error) {
+              return res.status(400).json({
+                error: error.message,
+                mensaje: "Error al insertar los productos",
+                return: false,
+              });
+            } else {
+              return res.status(200).json({
+                response: response,
+                mensaje: "Producto agregado correctamente",
+                return: true,
+              });
+            }
+          } catch (error) {
+            console.error("Error interno:", error.message);
+            return res.status(500).json({
+              error: error.menssage,
+              mensaje: "Error interno del servidor",
+              return: false,
+            });
+          }
+        }
+      );
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Datos inválidos" });
+  }
+};
 //controllador editar productos
 exports.editarProductos = async (req, res) => {
   try {
@@ -138,7 +176,7 @@ exports.editarProductos = async (req, res) => {
     return res.status(500).json({ error: "datos Invalidos" });
   }
 };
-
+  
 //controlador eliminarProductos
 exports.eliminarProductos = async (req, res) => {
   try {

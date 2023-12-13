@@ -63,22 +63,14 @@ exports.insertarCagetorias = async (req, res) => {
 //controllador editar Categorias
 exports.editarCategorias = async (req, res) => {
   try {
-    let producto_id = req.params.producto_id;
-    const data = {
-      nombre_producto: req.body.nombre_producto,
-      descripcion_producto: req.body.descripcion_producto,
-      precio_producto: req.body.precio_producto,
-      stock_producto: req.body.stock_producto,
-      img: req.body.img,
-    };
+    let catagoria_id = req.params.categoria_id;
+    
+     let nombre_categoria= req.body.nombre_categoria
+    
 
     //Validamos los datos
     if (
-      !data.nombre_producto ||
-      !data.descripcion_producto ||
-      !data.precio_producto ||
-      !data.stock_producto ||
-      !data.img
+      !nombre_categoria
     ) {
       return res.status(400).json({
         error: true,
@@ -89,31 +81,32 @@ exports.editarCategorias = async (req, res) => {
 
     //consulta sql parametrizada
     let consultaSql =
-      "UPDATE productos SET nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, stock_producto = ? , img = ? WHERE producto_id = ?";
+      "UPDATE categorias SET nombre_categoria = ? WHERE categoria_id = ?";
     baseDeDatos.query(
-      consultaSql,
-      [
-        data.nombre_producto,
-        data.descripcion_producto,
-        data.precio_producto,
-        data.stock_producto,
-        data.img,
-        producto_id,
-      ],
+      consultaSql,[
+        nombre_categoria,
+        catagoria_id],
       (err, response) => {
         try {
           if (err) {
             return res.status(400).json({
               error: true,
-              mensaje: "Error al insertar los datos",
+              mensaje: "Error en la consulta, mirar los datos!",
               return: false,
             });
-          } else {
+          } if(response.affectedRows>0){
             return res.status(200).json({
               response: response,
               mensaje: "Producto actualizado correctamente",
               return: true,
             });
+          }
+          else{
+            return res.status(200).json({
+                response: err,
+                mensaje: "No se ha actualizado una monda",
+                return: false,
+              });
           }
         } catch (error) {
           console.error("Error interno:", error.message);
