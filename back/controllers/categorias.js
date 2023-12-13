@@ -2,25 +2,18 @@ const { response } = require("express");
 const baseDeDatos = require("../modules/Conexion");
 const jwtVerified = require("./jwtVerified");
 
-//controllador de insertar productos
+//controllador de insertar categorias
 
-exports.insertarProductos = async (req, res) => {
+exports.insertarCagetorias = async (req, res) => {
   try {
     const data = {
-      producto_id: req.body.producto_id,
-      nombre_producto: req.body.nombre_producto,
-      descripcion_producto: req.body.descripcion_producto,
-      precio_producto: req.body.precio_producto,
-      stock_producto: req.body.stock_producto,
-      img: req.body.img,
+      categoria_id: req.body.categoria_id,
+      nombre_categoria: req.body.nombre_categoria,
+     
     };
     //Validamos los datos
     if (
-      !data.nombre_producto ||
-      !data.descripcion_producto ||
-      !data.precio_producto ||
-      !data.stock_producto ||
-      !data.img
+      !data.nombre_categoria|| !data.categoria_id
     ) {
       return res.status(400).json({
         error: true,
@@ -30,29 +23,26 @@ exports.insertarProductos = async (req, res) => {
     }
     // Consulta SQL parametrizada
     const sql =
-      "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO categorias(categoria_id, nombre_categoria) VALUES (?, ?)";
     baseDeDatos.query(
       sql,
       [
-        data.producto_id,
-        data.nombre_producto,
-        data.descripcion_producto,
-        data.precio_producto,
-        data.stock_producto,
-        data.img,
+        data.categoria_id,
+        data.nombre_categoria,
+        
       ],
       (error, response) => {
         try {
           if (error) {
             return res.status(400).json({
-              error: true,
-              mensaje: "Error al insertar los productos",
+              error: error,
+              mensaje: "Error al insertar la catategoria",
               return: false,
             });
           } else {
             return res.status(200).json({
               response: response,
-              mensaje: "producto agregado correctamente",
+              mensaje: "categoria agregado correctamente",
               return: true,
             });
           }
@@ -70,8 +60,8 @@ exports.insertarProductos = async (req, res) => {
   }
 };
 
-//controllador editar productos
-exports.editarProductos = async (req, res) => {
+//controllador editar Categorias
+exports.editarCategorias = async (req, res) => {
   try {
     let producto_id = req.params.producto_id;
     const data = {
@@ -138,9 +128,9 @@ exports.editarProductos = async (req, res) => {
     return res.status(500).json({ error: "datos Invalidos" });
   }
 };
-
-//controlador eliminarProductos
-exports.eliminarProductos = async (req, res) => {
+  
+//controlador eliminaCategorias
+exports.eliminarCategorias = async (req, res) => {
   try {
     const producto_id = req.params.producto_id;
 
@@ -181,7 +171,7 @@ exports.eliminarProductos = async (req, res) => {
   }
 };
 
-//controllador traerProductos
+//controllador traerCategorias
 /**
  * Obtiene la lista de productos.
  *
@@ -190,7 +180,7 @@ exports.eliminarProductos = async (req, res) => {
  * @param {Object} res - Objeto de respuesta.
  * @returns {Object} - Objeto JSON que contiene la respuesta.
  */
-exports.traerProductos = async (req, res) => {
+exports.traerCategorias = async (req, res) => {
   try {
     // Consulta para seleccionar todos los productos
     let consulta = "SELECT * FROM productos";

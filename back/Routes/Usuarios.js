@@ -10,9 +10,10 @@ const auth = require("../controllers/auth");
 app.use(express.json());
 
 /* RUTAS DEL CONTROLADOR USUARIO */
-router.post("/insertar",auth,usuarioControlador.insertarUsuario)
+router.post("/insertar",usuarioControlador.insertarUsuario)
 router.post("/login",usuarioControlador.loginUsuario)
 router.post("/emailValidator",usuarioControlador.emailValidator)
 router.put("/editarUsuario/:id_cliente",auth,usuarioControlador.editarUsuario)
 router.delete("/eliminarUsuario/:idCliente",auth,usuarioControlador.eliminarUsuario)
+router.get("/listarUsuarios",usuarioControlador.traerUsuarios)
 module.exports = router;

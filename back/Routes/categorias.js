@@ -1,4 +1,4 @@
-const productosControlador=require("../controllers/productos")
+const categoriasControlador=require("../controllers/categorias")
 const auth = require("../controllers/auth");
 const express = require("express");
 const router = express.Router();
@@ -9,8 +9,8 @@ app.use(express.json());
 
 
 /* RUTAS DEL CONTROLADOR PRODUCTOS */
-router.post("/insertarProducto",productosControlador.insertarProductos)
-router.put("/actualizarProducto/:producto_id",productosControlador.editarProductos)
+router.post("/insertarCategoria",categoriasControlador.insertarCagetorias)
+/* router.put("/actualizarProducto/:producto_id",productosControlador.editarProductos)
 router.delete("/eliminarProducto/:producto_id",productosControlador.eliminarProductos)
-router.get("/listarProductos",productosControlador.traerProductos)
+router.get("/listarProductos",productosControlador.traerProductos) */
 module.exports=router

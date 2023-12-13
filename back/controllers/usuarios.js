@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 /* const secret = process.env.secret; */
 const secret = "tu_clave_secreta"; // Reemplaza con tu clave secreta real
 const jwt = require("jsonwebtoken");
-const { promisify } = require("util");
 const baseDeDatos = require("../modules/Conexion");
 const jwtVerified = require("./jwtVerified");
 const util = require("util"); //la trae por defecto node js me permite usar async/await opcion a fetch
@@ -10,13 +9,14 @@ const { json } = require("body-parser");
 const baseDeDatosQuery = util.promisify(baseDeDatos.query).bind(baseDeDatos);
 const dotenv = require('dotenv');
 const enviarCorreoElectronico=require("../functions/EnviarCorreo")
-const generarCodigoAcceso=require("../functions/generarCodigoAcceso").default
+const generarCodigoAcceso=require("../functions/generarCodigoAcceso")
 // Cargar variables de entorno desde el archivo .env
 dotenv.config();
 
 //Controlladores para usuarios
 exports.insertarUsuario = async (req, res) => {
   const data = {
+    id_cliente: req.body.id_cliente,
     nombre_cliente: req.body.nombre_cliente,
     email_cliente: req.body.email_cliente,
     direccion_cliente: req.body.direccion_cliente,
@@ -32,9 +32,15 @@ exports.insertarUsuario = async (req, res) => {
   if (rows && rows.email_cliente !== undefined) {
     return res.status(400).json({ error: "Email ya está en uso" });
   }
+
+  // Modificar la inserción del usuario para usar la consulta parametrizada
+  const sql =
+    "INSERT INTO clientes (id_cliente, nombre_cliente, email_cliente, direccion_cliente, password_cliente) VALUES (?, ?, ?, ?, ?)";
+
   baseDeDatos.query(
-    "INSERT INTO clientes (nombre_cliente, email_cliente, direccion_cliente, password_cliente) VALUES (?, ?, ?, ?)",
+    sql,
     [
+      data.id_cliente,
       data.nombre_cliente,
       data.email_cliente,
       data.direccion_cliente,
@@ -43,26 +49,28 @@ exports.insertarUsuario = async (req, res) => {
     (err, results) => {
       try {
         if (err) {
-          /* console.error('Error en la consulta:', err); */
+          console.error("Error en la consulta:", err);
           return res.status(500).json({
-            error: false,
+            error: true,
             mensaje: "Error en la consulta",
+            errorDetails: err.message,
           });
         } else {
           return res.status(200).json({
             success: true,
             message: "Usuario insertado correctamente",
-            id: results.insertId, // Agregué el ID del usuario insertado
+            id: data.id_cliente,
             nombre_cliente: data.nombre_cliente,
             email_cliente: data.email_cliente,
             direccion_cliente: data.direccion_cliente,
           });
         }
       } catch (error) {
-        /*  console.error("Error interno:", error.message); */
+        console.error("Error interno:", error.message);
         return res.status(400).json({
           error: true,
           mensaje: "Error interno",
+          errorDetails: error.message,
         });
       }
     }
@@ -253,6 +261,45 @@ exports.loginUsuario = async (req, res) => {
     );
   } catch (error) {
     return res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+//controlador para traer usuarios
+exports.traerUsuarios = async (req, res) => {
+  try {
+    // Consulta para seleccionar todos los usuarios
+    let consulta = "SELECT * FROM clientes";
+
+    baseDeDatos.query(consulta, (err, usuarios) => {
+      if (err) {
+        console.error("Error en la consulta:", err);
+        return res.status(500).json({
+          error: "Error en la consulta",
+          status: false,
+        });
+      }
+
+      // Verificar si se encontraron productos
+      if (usuarios.length === 0) {
+        return res.status(404).json({
+          error: "No se encontraron usuarios",
+          status: false,
+        });
+      } else {
+        // Devolver la lista de productos
+        return res.status(200).json({
+          status: true,
+          mensaje: "usuarios listados correctamente",
+          usuarios: usuarios,
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Error interno:", error.message);
+    return res.status(500).json({
+      error: "Error interno del servidor",
+      status: false,
+    });
   }
 };
 
