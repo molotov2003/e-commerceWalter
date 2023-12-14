@@ -29,6 +29,14 @@ const configurarMulter = () => {
 };
 
 //controllador de insertar productos
+/**
+ * Funcion insertar categorias
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria y el nombre
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -true ,la respuesta, y un mensaje de confirmacion
+ */
 exports.insertarProductos = async (req, res) => {
   try {
     const upload = configurarMulter();
