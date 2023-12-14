@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs":"jsdoc -c jsdoc.json"
   },
   "author": "Miranda-Carmona",
   "license": "ISC",
@@ -23,5 +24,8 @@
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.2"
   }
 }

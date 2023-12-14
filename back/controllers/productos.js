@@ -4,6 +4,14 @@ const jwtVerified = require("./jwtVerified");
 const multer = require('multer');
 
 //funcion multer para subir imagenes
+/**
+ * Funcion para configurar multer para poder subir imganes
+ * @author Mario Miranda
+ * @method multer.diskStorage -objeto que contiene dos funciones , destino, y el nombre del archivo
+ * @var cb -guarda la ruta donde se almacenaran las imagenes
+ * @copyright 14/12/2023
+ * @returns  -devuelve el multer con el lugar donde se almacenaran los archivos
+ */
 const configurarMulter = () => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -15,6 +23,8 @@ const configurarMulter = () => {
     },
   });
 
+
+  //img es el nombre del campo en BD
   return multer({ storage: storage }).single('img');
 };
 

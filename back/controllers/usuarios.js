@@ -14,6 +14,14 @@ const generarCodigoAcceso=require("../functions/generarCodigoAcceso")
 dotenv.config();
 
 //Controlladores para usuarios
+/**
+ * Funcion insertar usuarios
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria 
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -true  y un mensaje de confirmacion en caso de error le muestra el mensaje detallado
+ */
 exports.insertarUsuario = async (req, res) => {
   const data = {
     id_cliente: req.body.id_cliente,
@@ -59,10 +67,6 @@ exports.insertarUsuario = async (req, res) => {
           return res.status(200).json({
             success: true,
             message: "Usuario insertado correctamente",
-            id: data.id_cliente,
-            nombre_cliente: data.nombre_cliente,
-            email_cliente: data.email_cliente,
-            direccion_cliente: data.direccion_cliente,
           });
         }
       } catch (error) {
@@ -78,6 +82,14 @@ exports.insertarUsuario = async (req, res) => {
 };
 
 //controlladores de editar usuarios
+/**
+ * Funcion insertar categorias
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id del cliente
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -le muestra un detalle en true y un mensaje de confirmacion
+ */
 exports.editarUsuario = async (req, res) => {
   try {
     let id_cliente = req.params.id_cliente;
@@ -111,7 +123,7 @@ exports.editarUsuario = async (req, res) => {
             if (result.affectedRows > 0) {
               return res.status(200).json({
                 mensaje: "Actualizado correctamente",
-                error: false,
+                detalles: true,
               });
             } else {
               return res.status(404).json({
@@ -139,6 +151,14 @@ exports.editarUsuario = async (req, res) => {
 };
 
 //controlladores de eliminar usuario
+/**
+ * Funcion eliminar usuario
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id del usuario 
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -la respuesta, y un mensaje de confirmacion y una variable true
+ */
 exports.eliminarUsuario = async (req, res) => {
   try {
     let idCliente = req.params.idCliente;
@@ -158,6 +178,7 @@ exports.eliminarUsuario = async (req, res) => {
               return res.status(200).json({
                 mensaje: response,
                 mensaje2: "Eliminado correctamente",
+                afirmacion:true
               });
             } else {
               return res.status(404).json({
@@ -178,12 +199,20 @@ exports.eliminarUsuario = async (req, res) => {
     console.error("Error interno:", error.message);
     return res.status(500).json({
       error: true,
-      mensaje: "Error interno del servidor",
+      mensaje: "id no encontrado",
     });
   }
 };
 
 //Hago la ruta para buscar si el email ya esta registrado en el sistema
+/**
+ * Funcion validar correo electronico
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el correo del cliente
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -true ,la respuesta, y un mensaje de confirmacion
+ */
 exports.emailValidator = async (req, res) => {
   try {
     let data = {
@@ -220,6 +249,15 @@ exports.emailValidator = async (req, res) => {
 };
 
 //controlador para login de usuario
+
+/**
+ * Funcion login usuario
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el correo del usuario y su contraseña
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns  -en caso de un login exitoso se devuelve un token para hacer acciones en la app web y un codigo de verificacion es enviado al correo electronico
+ */
 exports.loginUsuario = async (req, res) => {
   try {
     const email_cliente = req.body.email_cliente.trim();
@@ -246,7 +284,7 @@ exports.loginUsuario = async (req, res) => {
           return res.status(401).json({ error: 'Credenciales inválidas' });
         } else {
           // Generar token utilizando la función del módulo jwtVerified
-          const token = jwtVerified.generateToken(respuesta[0].id_cliente);
+          const token = jwtVerified(respuesta[0].id_cliente);
 
           // Enviar código por correo electrónico
           const codigoAcceso = generarCodigoAcceso();
@@ -254,7 +292,7 @@ exports.loginUsuario = async (req, res) => {
 
           return res.status(200).json({
             token: token,
-            message: 'Bienvenido, token generado. Se ha enviado un código por correo electrónico.',
+            message: 'Bienvenido, se ha enviado un token a su correo electronico, porfavor digitelo en la doble autenticacion.',
           });
         }
       }
@@ -265,6 +303,14 @@ exports.loginUsuario = async (req, res) => {
 };
 
 //controlador para traer usuarios
+/**
+ * Funcion traer usuarios
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -status true y mensaje de confirmacion
+ */
 exports.traerUsuarios = async (req, res) => {
   try {
     // Consulta para seleccionar todos los usuarios
@@ -290,7 +336,7 @@ exports.traerUsuarios = async (req, res) => {
         return res.status(200).json({
           status: true,
           mensaje: "usuarios listados correctamente",
-          usuarios: usuarios,
+          
         });
       }
     });

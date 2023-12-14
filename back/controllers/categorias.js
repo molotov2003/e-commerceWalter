@@ -4,6 +4,15 @@ const jwtVerified = require("./jwtVerified");
 
 //controllador de insertar categorias
 
+
+/**
+ * Funcion insertar categorias
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria y el nombre
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -true ,la respuesta, y un mensaje de confirmacion
+ */
 exports.insertarCagetorias = async (req, res) => {
   try {
     const data = {
@@ -61,6 +70,14 @@ exports.insertarCagetorias = async (req, res) => {
 };
 
 //controllador editar Categorias
+/**
+ * Funcion actualizar categorias
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria y el nombre
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -true ,la respuesta, y un mensaje de confirmacion, en caso de no modificar datos, se mostrara el mensaje de error,un mensaje y un booleano false
+ */
 exports.editarCategorias = async (req, res) => {
   try {
     let catagoria_id = req.params.categoria_id;
@@ -104,7 +121,7 @@ exports.editarCategorias = async (req, res) => {
           else{
             return res.status(200).json({
                 response: err,
-                mensaje: "No se ha actualizado una monda",
+                mensaje: "No se ha encontrado ninguna categoria",
                 return: false,
               });
           }
@@ -123,6 +140,14 @@ exports.editarCategorias = async (req, res) => {
 };
   
 //controlador eliminaCategorias
+/**
+ * Funcion eliminar categorias
+ * @author Mario Miranda
+ * @copyright 14/12/2023
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria y el nombre
+ * @param {Response} res -los datos que se devolveran al cliente
+ * @returns {boolean} -devuelve un true, un mensaje de confirmacion en un json
+ */
 exports.eliminarCategorias = async (req, res) => {
   try {
     const categoria_id = req.params.categoria_id;
@@ -165,18 +190,17 @@ exports.eliminarCategorias = async (req, res) => {
 //controllador traerCategorias
 /**
  * Obtiene la lista de productos.
- *
  * @function traerProductos
  * @param {Object} req - Objeto de solicitud.
  * @param {Object} res - Objeto de respuesta.
- * @returns {Object} - Objeto JSON que contiene la respuesta.
+ * @returns {Object} - Objeto JSON que contiene la respuesta.y un status en true con su respuesta
  */
 exports.traerCategorias = async (req, res) => {
   try {
     // Consulta para seleccionar todos los productos
     let consulta = "SELECT * FROM categorias";
 
-    baseDeDatos.query(consulta, (err, productos) => {
+    baseDeDatos.query(consulta, (err, response) => {
       if (err) {
         console.error("Error en la consulta:", err);
         return res.status(500).json({
@@ -187,7 +211,7 @@ exports.traerCategorias = async (req, res) => {
       }
 
       // Verificar si se encontraron productos
-      if (productos.length === 0) {
+      if (response.length === 0) {
         return res.status(200).json({
           error: "No se encontraron categorias",
           status: false,
@@ -197,7 +221,7 @@ exports.traerCategorias = async (req, res) => {
         return res.status(200).json({
           status: true,
           mensaje: "categorias listadas correctamente",
-          productos: productos,
+          productos: response,
         });
       }
     });

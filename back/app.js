@@ -6,7 +6,8 @@ const productosRoutes=require("./Routes/Productos")
 const categoriaRoutes=require("./Routes/categorias")
 const bodyParser=require("body-parser")
 const cors = require('cors'); // Importa el middleware cors
-/* require("dotenv/config"); */
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 
