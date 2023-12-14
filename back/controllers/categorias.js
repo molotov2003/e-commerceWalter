@@ -125,28 +125,26 @@ exports.editarCategorias = async (req, res) => {
 //controlador eliminaCategorias
 exports.eliminarCategorias = async (req, res) => {
   try {
-    const producto_id = req.params.producto_id;
+    const categoria_id = req.params.categoria_id;
 
     //Consulta parametrizada
-
-    let consultaEliminarProducto =
-      "DELETE FROM productos WHERE producto_id = ?";
+    let consultaEliminarCategoria =
+      "DELETE FROM categorias WHERE categoria_id = ?";
 
     baseDeDatos.query(
-      consultaEliminarProducto,
-      producto_id,
+      consultaEliminarCategoria,
+      categoria_id,
       (err, response) => {
         try {
           if (err) {
             return res.status(400).json({
-              error: true,
-              mensaje: "Error al eliminar producto",
+              error: err.message,
+              mensaje: "Error al eliminar la categoria",
               return: false,
             });
           } else {
             return res.status(200).json({
-              response: response,
-              mensaje: "producto eliminado correctamente",
+              mensaje: "categoria eliminada correctamente",
               return: true,
             });
           }
@@ -176,28 +174,29 @@ exports.eliminarCategorias = async (req, res) => {
 exports.traerCategorias = async (req, res) => {
   try {
     // Consulta para seleccionar todos los productos
-    let consulta = "SELECT * FROM productos";
+    let consulta = "SELECT * FROM categorias";
 
     baseDeDatos.query(consulta, (err, productos) => {
       if (err) {
         console.error("Error en la consulta:", err);
         return res.status(500).json({
-          error: "Error en la consulta",
+          error: err.message,
           status: false,
+          message:"Error en la consulta"
         });
       }
 
       // Verificar si se encontraron productos
       if (productos.length === 0) {
-        return res.status(404).json({
-          error: "No se encontraron productos",
+        return res.status(200).json({
+          error: "No se encontraron categorias",
           status: false,
         });
       } else {
         // Devolver la lista de productos
         return res.status(200).json({
           status: true,
-          mensaje: "Productos listados correctamente",
+          mensaje: "categorias listadas correctamente",
           productos: productos,
         });
       }
