@@ -114,7 +114,7 @@ exports.editarCategorias = async (req, res) => {
           } if(response.affectedRows>0){
             return res.status(200).json({
               response: response,
-              mensaje: "Producto actualizado correctamente",
+              mensaje: "Categoria actualizado correctamente",
               return: true,
             });
           }

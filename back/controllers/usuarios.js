@@ -28,7 +28,7 @@ exports.insertarUsuario = async (req, res) => {
     nombre_cliente: req.body.nombre_cliente,
     email_cliente: req.body.email_cliente,
     direccion_cliente: req.body.direccion_cliente,
-    password_cliente: bcrypt.hashSync(req.body.password_cliente, 7),
+    password_cliente: bcrypt.hashSync(req.body.password_cliente,7),
   };
 
   // Validar el correo electrónico antes de insertar un nuevo usuario

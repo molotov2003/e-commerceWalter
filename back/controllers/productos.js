@@ -1,21 +1,20 @@
 const { response } = require("express");
 const baseDeDatos = require("../modules/Conexion");
 const jwtVerified = require("./jwtVerified");
-const multer = require('multer');
+const multer = require("multer");
 
 //funcion multer para subir imagenes
 /**
  * Funcion para configurar multer para poder subir imganes
  * @author Mario Miranda
  * @method multer.diskStorage -objeto que contiene dos funciones , destino, y el nombre del archivo
- * @var cb -guarda la ruta donde se almacenaran las imagenes
  * @copyright 14/12/2023
  * @returns  -devuelve el multer con el lugar donde se almacenaran los archivos
  */
 const configurarMulter = () => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, './images'); // Carpeta donde se almacenarán las imágenes
+      cb(null, "./images"); // Carpeta donde se almacenarán las imágenes
     },
     filename: (req, file, cb) => {
       const fileName = `${Date.now()}-${file.originalname}`;
@@ -23,9 +22,8 @@ const configurarMulter = () => {
     },
   });
 
-
   //img es el nombre del campo en BD
-  return multer({ storage: storage }).single('img');
+  return multer({ storage: storage }).single("img");
 };
 
 //controllador de insertar productos
@@ -41,7 +39,6 @@ exports.insertarProductos = async (req, res) => {
   try {
     const upload = configurarMulter();
     upload(req, res, async (err) => {
-  
       if (err instanceof multer.MulterError) {
         // Ocurrió un error de Multer
         return res.status(400).json({
@@ -129,72 +126,91 @@ exports.insertarProductos = async (req, res) => {
 //controllador editar productos
 exports.editarProductos = async (req, res) => {
   try {
-    let producto_id = req.params.producto_id;
-    const data = {
-      nombre_producto: req.body.nombre_producto,
-      descripcion_producto: req.body.descripcion_producto,
-      precio_producto: req.body.precio_producto,
-      stock_producto: req.body.stock_producto,
-      img: req.body.img,
-    };
+    const upload = configurarMulter();
+    upload(req, res, async (err) => {
+      if (err instanceof multer.MulterError) {
+        // Ocurrió un error de Multer
+        return res.status(400).json({
+          error: err.message,
+          mensaje: "Error al cargar la imagen",
+          return: false,
+        });
+      } else if (err) {
+        // Otro tipo de error
+        return res.status(500).json({
+          error: err.message,
+          mensaje: "Error interno del servidor",
+          return: false,
+        });
+      }
+let producto_id=req.params.producto_id;
+      const data = {
+        nombre_producto: req.body.nombre_producto,
+        descripcion_producto: req.body.descripcion_producto,
+        precio_producto: req.body.precio_producto,
+        stock_producto: req.body.stock_producto,
+        img: req.file.filename, // Nombre del archivo de imagen cargado
+      };
 
-    //Validamos los datos
-    if (
-      !data.nombre_producto ||
-      !data.descripcion_producto ||
-      !data.precio_producto ||
-      !data.stock_producto ||
-      !data.img
-    ) {
-      return res.status(400).json({
-        error: true,
-        mensaje: "debe llenar todos los campos",
-        return: false,
-      });
-    }
+      // Validamos los datos
+      if (
+        !data.nombre_producto ||
+        !data.descripcion_producto ||
+        !data.precio_producto ||
+        !data.stock_producto ||
+        !data.img
+      ) {
+        return res.status(400).json({
+          error: true,
+          mensaje: "Debe llenar todos los campos",
+          return: false,
+        });
+      }
 
-    //consulta sql parametrizada
-    let consultaSql =
-      "UPDATE productos SET nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, stock_producto = ? , img = ? WHERE producto_id = ?";
-    baseDeDatos.query(
-      consultaSql,
-      [
-        data.nombre_producto,
-        data.descripcion_producto,
-        data.precio_producto,
-        data.stock_producto,
-        data.img,
-        producto_id,
-      ],
-      (err, response) => {
-        try {
-          if (err) {
-            return res.status(400).json({
-              error: true,
-              mensaje: "Error al insertar los datos",
+      // Consulta SQL parametrizada
+      let consultaSql =
+        "UPDATE productos SET nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, stock_producto = ? , img = ? WHERE producto_id = ?";
+      baseDeDatos.query(
+        consultaSql,
+        [
+          data.nombre_producto,
+          data.descripcion_producto,
+          data.precio_producto,
+          data.stock_producto,
+          data.img,
+          producto_id,
+        ],
+        (err, response) => {
+          try {
+            if (err) {
+              return res.status(400).json({
+                error: true,
+                mensaje: "Error al insertar los datos",
+                return: false,
+              });
+            } else {
+              return res.status(200).json({
+                response: response,
+                mensaje: "Producto actualizado correctamente",
+                return: true,
+              });
+            }
+          } catch (error) {
+            console.error("Error interno:", error.message);
+            return res.status(500).json({
+              error: error.menssage,
+              mensaje: "Error interno del servidor",
               return: false,
             });
-          } else {
-            return res.status(200).json({
-              response: response,
-              mensaje: "Producto actualizado correctamente",
-              return: true,
-            });
           }
-        } catch (error) {
-          console.error("Error interno:", error.message);
-          return res.status(500).json({
-            error: true,
-            mensaje: "Error interno del servidor",
-          });
         }
-      }
-    );
+      );
+    });
   } catch (error) {
-    return res.status(500).json({ error: "datos Invalidos" });
+    return res.status(500).json({ error: "Datos inválidos" });
   }
 };
-  
+
 //controlador eliminarProductos
 exports.eliminarProductos = async (req, res) => {
   try {
