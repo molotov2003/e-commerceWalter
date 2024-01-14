@@ -5,7 +5,7 @@ import Routing from "./router/Routing";
 function App() {
   return (
     <>
-       return <Routing />;
+        <Routing />;
     </>
   )
 }

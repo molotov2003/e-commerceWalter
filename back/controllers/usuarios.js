@@ -319,6 +319,39 @@ exports.traerUsuarios = async (req, res) => {
   }
 };
 
+exports.traerUnUsuario = async (req, res) => {
+  try {
+    // Obtener el id_cliente de los parámetros de la URL
+    const id_cliente = req.params.id_cliente;
+
+    // Consulta para seleccionar un usuario por su id_cliente
+    const consulta = "SELECT * FROM clientes WHERE id_cliente = ?";
+    
+    const usuarios = await baseDeDatosQuery(consulta, [id_cliente]);
+
+    // Verificar si se encontró el usuario
+    if (usuarios.length === 0) {
+      return res.status(404).json({
+        status: false,
+        mensaje: "No se encontró el usuario",
+      });
+    }
+
+    // Devolver la información del usuario
+    return res.status(200).json({
+      status: true,
+      mensaje: "Usuario encontrado correctamente",
+      usuario: usuarios[0], // Tomar el primer usuario de la lista
+    });
+  } catch (error) {
+    console.error("Error interno:", error.message);
+    return res.status(500).json({
+      status: false,
+      mensaje: "Error interno del servidor",
+      error: error.message,
+    });
+  }
+};
 
 
 

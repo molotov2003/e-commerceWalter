@@ -10,7 +10,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware para analizar el cuerpo de la solicitud
 app.use(express.json());

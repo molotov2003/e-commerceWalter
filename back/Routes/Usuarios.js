@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const app = express();
+
 const usuarioControlador = require("../controllers/usuarios");
 const auth = require("../controllers/auth");
 
@@ -16,4 +17,5 @@ router.post("/emailValidator",usuarioControlador.emailValidator)
 router.put("/editarUsuario/:id_cliente",auth,usuarioControlador.editarUsuario)
 router.delete("/eliminarUsuario/:idCliente",auth,usuarioControlador.eliminarUsuario)
 router.get("/listarUsuarios",usuarioControlador.traerUsuarios)
+router.get("/listarunUsuario/:id",usuarioControlador.traerUnUsuario)
 module.exports = router;

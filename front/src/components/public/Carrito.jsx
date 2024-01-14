@@ -1,28 +1,15 @@
 import { NavLink } from "react-router-dom";
-
+import React, { useState } from "react";
+import Header from "../private/Header";
+import Footerr from "../private/Footer";
+import logo from "../../assets/img/logo1.png";
+import user from "../../assets/img/user.png";
+import imgnav from "../../assets/img/image1.png";
 const Carrito = () => {
   return (
     <>
-     <div className="container">
-        <div className="navbar">
-            <div className="logo">
-                <a href="index.html"><img src="images/logo.png" alt="logo" width="125px"/></a>
-            </div>
-            <nav>
-                <ul id="MenuItems">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="products.html">Products</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Contact</a></li>
-                    <li><a href="account.html">Account</a></li>
-                </ul>
-            </nav>
-            <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"/></a>
-            <img src="images/menu.png" className="menu-icon" />
-        </div>
-    </div>
+     <Header/>
 
-   
     <div className="small-container cart-page">
         <table>
             <tr>
@@ -95,45 +82,7 @@ const Carrito = () => {
     </div>
 
    
-    <div className="footer">
-        <div className="container">
-            <div className="row">
-                <div className="footer-col-1">
-                    <h3>Download Our App</h3>
-                    <p>Download App for Android and ios mobile phone.</p>
-                    <div className="app-logo">
-                        <img src="images/play-store.png"/>
-                        <img src="images/app-store.png"/>
-                    </div>
-                </div>
-                <div className="footer-col-2">
-                    <img src="images/logo-white.png"/>
-                    <p>Our Purpose Is To Sustainably Make the Pleasure and Benefits of Sports Accessible to the Many.
-                    </p>
-                </div>
-                <div className="footer-col-3">
-                    <h3>Useful Links</h3>
-                    <ul>
-                        <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Join Affiliate</li>
-                    </ul>
-                </div>
-                <div className="footer-col-4">
-                    <h3>Follow Us</h3>
-                    <ul>
-                        <li>Facebook</li>
-                        <li>Twitter</li>
-                        <li>Instagram</li>
-                        <li>Youtube</li>
-                    </ul>
-                </div>
-            </div>
-            <hr/>
-            <p className="copyright">Copyright 2020 - Samwit Adhikary</p>
-        </div>
-    </div>
+     <Footerr/>
     </>
   );
 };
