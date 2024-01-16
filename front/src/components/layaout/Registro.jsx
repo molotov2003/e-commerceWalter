@@ -145,7 +145,9 @@ const Registro = () => {
                     required  />
             </div>
 
-            <button type="submit">Iniciar sesion</button>
+            <button type="submit" className="btn btn-success">Registrarse</button>
+            <br />
+            <a style={{color:"black"}} href="./">¿Ya tienes cuenta?</a>
           </form>
         </div>
       </div>

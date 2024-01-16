@@ -3,6 +3,8 @@ const baseDeDatos = require("../modules/Conexion");
 const jwtVerified = require("./jwtVerified");
 const multer = require("multer");
 
+//SELECT nombre_categoria FROM categorias INNER JOIN productos on productos.id_categoria = categorias.categoria_id; 
+// SELECT * FROM productos INNER JOIN categorias on productos.id_categoria = categorias.categoria_id WHERE categorias.categoria_id = 2; 
 //funcion multer para subir imagenes
 /**
  * Funcion para configurar multer para poder subir imganes

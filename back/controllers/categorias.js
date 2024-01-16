@@ -50,7 +50,7 @@ exports.insertarCagetorias = async (req, res) => {
             });
           } else {
             return res.status(200).json({
-              response: response,
+              response: true,
               mensaje: "categoria agregado correctamente",
               return: true,
             });
@@ -58,7 +58,7 @@ exports.insertarCagetorias = async (req, res) => {
         } catch (error) {
           console.error("Error interno:", error.message);
           return res.status(500).json({
-            error: true,
+            error: false,
             mensaje: "Error interno del servidor",
           });
         }

@@ -44,7 +44,7 @@ exports.insertarUsuario = async (req, res) => {
 
   // Modificar la inserción del usuario para usar la consulta parametrizada
   const sql =
-    "INSERT INTO clientes (id_cliente, nombre_cliente, email_cliente, direccion_cliente, password_cliente) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO clientes (id_cliente, nombre_cliente, email_cliente, direccion_cliente, password_cliente, rol,estado) VALUES (?, ?, ?, ?, ?,1,1)";
 
   baseDeDatos.query(
     sql,

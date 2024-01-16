@@ -9,8 +9,9 @@ app.use(express.json());
 
 
 /* RUTAS DEL CONTROLADOR PRODUCTOS */
-router.post("/insertarProducto",auth,productosControlador.insertarProductos)
+router.post("/insertarProducto",productosControlador.insertarProductos)
 router.put("/actualizarProducto/:producto_id",auth,productosControlador.editarProductos)
 router.delete("/eliminarProducto/:producto_id",auth,productosControlador.eliminarProductos)
 router.get("/listarProductos",productosControlador.traerProductos)
+
 module.exports=router

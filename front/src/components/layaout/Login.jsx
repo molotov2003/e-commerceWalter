@@ -136,8 +136,9 @@ const Login = () => {
               />
             </div>
 
-            <button>Iniciar sesion</button>
-            <a href="./Registro">¿aun no tienes cuenta?</a>
+            <button type="submit" className="btn btn-success">Iniciar Sesion</button>
+<br />
+            <a style={{color:"black"}} href="./Registro">¿aun no tienes cuenta?</a>
           </form>
         </div>
       </div>
