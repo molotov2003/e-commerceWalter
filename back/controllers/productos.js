@@ -63,27 +63,15 @@ exports.insertarProductos = async (req, res) => {
         descripcion_producto: req.body.descripcion_producto,
         precio_producto: req.body.precio_producto,
         stock_producto: req.body.stock_producto,
-        img: req.file.filename, // Nombre del archivo de imagen cargado
+        img: req.file, // Nombre del archivo de imagen cargado
+        id_categoria: req.body.id_categoria
       };
-
-      // Validamos los datos
-      if (
-        !data.nombre_producto ||
-        !data.descripcion_producto ||
-        !data.precio_producto ||
-        !data.stock_producto ||
-        !data.img
-      ) {
-        return res.status(400).json({
-          error: true,
-          mensaje: "Debe llenar todos los campos",
-          return: false,
-        });
-      }
-
+      
+      console.log(data)
+      
       // Consulta SQL parametrizada
       const sql =
-        "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img,id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
       baseDeDatos.query(
         sql,
@@ -94,6 +82,7 @@ exports.insertarProductos = async (req, res) => {
           data.precio_producto,
           data.stock_producto,
           data.img,
+          data.id_categoria
         ],
         (error, response) => {
           try {

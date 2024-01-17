@@ -221,7 +221,7 @@ exports.traerCategorias = async (req, res) => {
         return res.status(200).json({
           status: true,
           mensaje: "categorias listadas correctamente",
-          productos: response,
+          categorias: response,
         });
       }
     });
