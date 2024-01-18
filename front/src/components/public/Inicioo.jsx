@@ -46,12 +46,6 @@ const Inicio = () => {
     <>
      <Header/>
 
-    
-
-  
-
-  
-
     <div className="container-fluid">
         <div className="row">
           <div className="col-10">

@@ -27,27 +27,22 @@ const Login = () => {
   const mostrarErrorAlert = (message) => {
     Swal.fire({
       icon: "error",
-      title: "Error",
+      title: "Ha salido algo mal",
       text: message,
     });
   };
 
-  //VALIDACION DE LOS CAMPOS VACIOS
-  const validarFormulario = () => {
-    if (!form.email_cliente || !form.password_cliente) {
-      mostrarCamposVaciosAlert();
-      return false;
-    }
-    return true;
+  //MENSAJE DE ERROR
+  const mostrarEAlert = (message) => {
+    Swal.fire({
+      icon: "success",
+      title: "Felicidades",
+      text: message,
+    });
   };
 
   const guardarLogin = async (e) => {
     e.preventDefault();
-
-    if (!validarFormulario()) {
-      return;
-    }
-
     let nuevoPerfil = form;
 
     try {
@@ -58,15 +53,18 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
+      
+      console.log(request)
       const data = await request.json();
+      console.log(data)
       if (data.success === true) {
         //VEREFICO SI EL USUARIO EXISTE
-        const usuarioExistente = localStorage.getItem("usuario");
+        const usuarioExistente = localStorage.getItem("usuarios");
         if (usuarioExistente) {
           localStorage.removeItem("usuario");
         }
-        localStorage.setItem("usuario", JSON.stringify(data.usuario));
-        console.log(data.usuario);
+        localStorage.setItem("usuario", JSON.stringify(data.token));
+        console.log(data.token);
 
         //MENSAJE EXITOSO
         setGuardado("Guardado");

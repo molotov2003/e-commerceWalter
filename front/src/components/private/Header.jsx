@@ -3,13 +3,41 @@ import img from "../../assets/img/bg-registration-form-2.jpg";
 import logo from "../../assets/img/logo1.png";
 import user from "../../assets/img/user.png";
 import imgnav from "../../assets/img/image1.png";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
+  //Cierro sesion
+  const cerrarSesion = (event) => {
+    const selectedValue = event.target.value;
+    if (selectedValue === "3") {
+      Swal.fire({
+        title: "Estas seguro?",
+        text: "Quieres salir de la pagina!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Salir!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Sesion cerrada!", "Exitosamente.", "success");
+          console.log("cerrar sesion");
+          localStorage.clear();
+          setAutenticado({});
+          navigate("/");
+        }
+      });
+    }
+  }
+
   return (
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12">
+          <div id="niko" className="col-12">
             <div className="header">
               <div className="navbar">
                 <div className="logo">
@@ -26,11 +54,11 @@ const Header = () => {
                       <a href="/carrito">carrito</a>
                     </li>               
                     <li>
-                      <a href="/">Cerrar sesion</a>
+                      <a onClick={cerrarSesion} href="/">Cerrar sesion</a>
                     </li>
 
                     <li>
-                      <a href="account.html">Agregar Producto</a>
+                      <a href="/AgregarProduct">Agregar Producto</a>
                     </li>
                   </ul>
                 </nav>

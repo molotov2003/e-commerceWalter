@@ -268,6 +268,8 @@ exports.loginUsuario = async (req, res) => {
       enviarCorreoElectronico(email_cliente, codigoAcceso);
 
       return res.status(200).json({
+        status:200,
+        success:true,
         token: token,
         message: 'Bienvenido, se ha enviado un token a su correo electrónico, por favor, ingréselo en la doble autenticación.',
       });
@@ -322,7 +324,7 @@ exports.traerUsuarios = async (req, res) => {
 exports.traerUnUsuario = async (req, res) => {
   try {
     // Obtener el id_cliente de los parámetros de la URL
-    const id_cliente = req.params.id_cliente;
+    const id_cliente = req.params.id;
 
     // Consulta para seleccionar un usuario por su id_cliente
     const consulta = "SELECT * FROM clientes WHERE id_cliente = ?";

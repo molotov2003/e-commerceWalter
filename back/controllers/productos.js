@@ -63,7 +63,7 @@ exports.insertarProductos = async (req, res) => {
         descripcion_producto: req.body.descripcion_producto,
         precio_producto: req.body.precio_producto,
         stock_producto: req.body.stock_producto,
-        img: req.file, // Nombre del archivo de imagen cargado
+        img: req.file.filename, // Nombre del archivo de imagen cargado
         id_categoria: req.body.id_categoria
       };
       
@@ -71,8 +71,8 @@ exports.insertarProductos = async (req, res) => {
       
       // Consulta SQL parametrizada
       const sql =
-        "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img,id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+        "INSERT INTO productos (producto_id, nombre_producto, descripcion_producto, precio_producto, stock_producto, img, id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      console.log(sql)
       baseDeDatos.query(
         sql,
         [
@@ -84,6 +84,7 @@ exports.insertarProductos = async (req, res) => {
           data.img,
           data.id_categoria
         ],
+        
         (error, response) => {
           try {
             if (error) {

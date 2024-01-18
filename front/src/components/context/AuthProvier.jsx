@@ -10,19 +10,21 @@ export const AuthProvider = ({ children }) => {
     autenticarUsuario();
   }, []);
   const autenticarUsuario = async () => {
-    const usuario = localStorage.getItem("usuario");
+    const usuario = localStorage.getItem("usuarios");
+    console.log(usuario)
     try {
       const userObj = JSON.parse(usuario);
-      if (!userObj.token || !userObj.nombre) {
-        return false;
-      }
+      // if (!userObj.token || !userObj.nombre) {
+      //   return false;
+        
+      // }
+      console.log(userObj)
       const request = await fetch(
-        Global.url + "usuario/TraerUnSolo/" + userObj.idUsuario,
+        Global.url + "users/listarunUsuario/" + userObj.id_cliente,
         {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: userObj.token,
+            "Content-Type": "application/json"         
           },
         }
       );
@@ -31,11 +33,16 @@ export const AuthProvider = ({ children }) => {
         console.error("Error en la autenticación:", request.statusText);
         return;
       }
+     
       const data = await request.json();
+
       setAutenticado(data.usuario);
+      console.log(data)
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
+
     }
+     
   };
 
   return (
