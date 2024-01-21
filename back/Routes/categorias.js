@@ -12,6 +12,6 @@ app.use(express.json());
 
 router.post("/insertarCategoria",categoriasControlador.insertarCagetorias)
 router.put("/actualizarCategoria/:categoria_id",auth,categoriasControlador.editarCategorias)
-router.delete("/eliminarCategoria/:categoria_id",auth,categoriasControlador.eliminarCategorias)
+router.delete("/eliminarCategoria/:categoria_id",categoriasControlador.eliminarCategorias)
 router.get("/listarCategorias",categoriasControlador.traerCategorias)
 module.exports=router

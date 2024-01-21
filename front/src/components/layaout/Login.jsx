@@ -100,8 +100,11 @@ const Login = () => {
   }
   return (
     <>
-      <div className="wrapper">
+      <div className="wrapperr">
         <div className="inner">
+          <br />
+          <br />
+          <br />
           <form
             className="custom-form hero-form"
             action="#"
@@ -138,6 +141,8 @@ const Login = () => {
 <br />
             <a style={{color:"black"}} href="./Registro">¿aun no tienes cuenta?</a>
           </form>
+          <br /><br />
+          <br /><br />
         </div>
       </div>
     </>

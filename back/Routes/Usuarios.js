@@ -15,7 +15,7 @@ router.post("/insertar",usuarioControlador.insertarUsuario)
 router.post("/login",usuarioControlador.loginUsuario)
 router.post("/emailValidator",usuarioControlador.emailValidator)
 router.put("/editarUsuario/:id_cliente",auth,usuarioControlador.editarUsuario)
-router.delete("/eliminarUsuario/:idCliente",auth,usuarioControlador.eliminarUsuario)
+router.delete("/eliminarUsuario/:idCliente",usuarioControlador.eliminarUsuario)
 router.get("/listarUsuarios",usuarioControlador.traerUsuarios)
 router.get("/listarunUsuario/:id",usuarioControlador.traerUnUsuario)
 module.exports = router;

@@ -1,15 +1,8 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body{
     font-family: 'Poppins', sans-serif;
    
 }
-
-
 
 nav{
     flex: 1;
@@ -79,12 +72,7 @@ p{
 .col-3 img{
     width: 100%;
 }
-.small-container{
-    max-width: 1080px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-}
+
 .col-4{
     flex-basis: 25%;
     padding: 10px;
@@ -282,18 +270,7 @@ select:focus{
 input:focus{
     outline: none;
 }
-.single-product .fa{
-    color: #ff523b;
-    margin-left: 10px;
-}
-.small-img-row{
-    display: flex;
-    justify-content: space-between;
-}
-.small-img-col{
-    flex-basis: 24%;
-    cursor: pointer;
-}
+
 
 /* Cart Items */
 .cart-page{

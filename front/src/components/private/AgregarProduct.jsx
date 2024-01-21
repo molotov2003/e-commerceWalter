@@ -11,6 +11,7 @@ import user from "../../assets/img/user.png";
 import imgnav from "../../assets/img/image1.png";
 import jordan from "../../assets/img/jordan.jpg";
 
+
 const AgregarProduct = () => {
   // Estado para almacenar la URL de la imagen seleccionada
   const [imagenPreview, setImagenPreview] = useState(null);
@@ -24,8 +25,7 @@ const AgregarProduct = () => {
   const [usuarios, setusuarios] = useState(null);
   // Hago el state para las categorias
   const [categorias, setCategorias] = useState([]);
-  // Hago el state para manipular la categorias seleccionada
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState();
+ 
 
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
@@ -113,12 +113,9 @@ const AgregarProduct = () => {
   };
 
   //////////////////////////////////Agregar Productos
- // GUARDAR CARDS
+
  const guardarCards = async e => {
   e.preventDefault();
-
- 
-
   const formData = new FormData();
   formData.append("producto_id", id);
   formData.append("nombre_producto", nombre);
@@ -142,13 +139,10 @@ const AgregarProduct = () => {
       // MENSAJE EXITOSO
       console.log(data);
       setGuardado("Guardado");
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Tu Card ha sido guardada!!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+
+      mostrarAlert(data.mensaje);
+      window.location.reload();
+      return <Navigate to="/AgregarProduct" />;
     } else {
       // MENSAJE DE ERROR
       setGuardado("Error");
@@ -183,6 +177,36 @@ const AgregarProduct = () => {
       });
   };
 
+  ///////////////////////////////// Eliminar productos
+  const EliminarProducto = async (producto_id) => {
+    
+    
+    console.log(producto_id)
+    fetch(Global.url + "products/eliminarProducto/"+producto_id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setProductos(data.productos);
+        mostrarAlert(
+          "Se ha eliminado correctamente"
+        );
+        window.location.reload();
+        return <Navigate to="/AgregarProduct" />;
+      })
+      .catch((error) => {
+       
+        mostrarErrorAlert(
+          "Algo salió mal. Por favor, inténtelo de nuevo más tarde."
+        );
+      });
+     
+  };
   /////////////////// Listar las categorias
   const traerCategorias = async () => {
     try {
@@ -206,7 +230,34 @@ const AgregarProduct = () => {
     }
   };
 
-  /////////////////// Listar los usuarios
+  /// Eliminar Categorias
+  const EliminarCategoria = async (categoria_id) => {
+       
+    fetch(Global.url + "categorias/eliminarCategoria/"+categoria_id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setProductos(data.productos);
+       
+        window.location.reload();
+        return <Navigate to="/AgregarProduct" />;
+      })
+      .catch((error) => {
+       
+        mostrarErrorAlert(
+          "Algo salió mal. Por favor, inténtelo de nuevo más tarde."
+        );
+      });
+     
+  };
+
+  /////////////////// Listar los usuarios ///////////////////////
   const traerusuarios = async () => {
     try {
       const response = await fetch(Global.url + "users/listarusuarios", {
@@ -227,6 +278,33 @@ const AgregarProduct = () => {
     } catch (error) {
       console.error("Error al cargar categorías:", error);
     }
+  };
+
+  /////////////// Eliminar Usuario //////////////////
+  const EliminarUsuario= async (id_cliente) => {
+       
+    fetch(Global.url + "users/eliminarUsuario/"+id_cliente, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setProductos(data.productos);
+        
+        window.location.reload();
+        return <Navigate to="/AgregarProduct" />;
+      })
+      .catch((error) => {
+       
+        mostrarErrorAlert(
+          "Algo salió mal. Por favor, inténtelo de nuevo más tarde."
+        );
+      });
+     
   };
 
   useEffect(() => {
@@ -320,12 +398,13 @@ const AgregarProduct = () => {
             />
           </div>
           <div className="form-wrapper">
-            <select   onChange={e => setCategoriass(e.target.value)}
+            <label htmlFor="">Agregar Categoria</label>
+            <select style={{width:"100px", height:"30px", fontSize:"14px"}}  onChange={e => setCategoriass(e.target.value)}
               className="form-control"
               name="Categoria_idCategoria"
               aria-label="Default select example"
             >
-              <option selected>Selecciona una Categorias</option>
+              <option selected >Selecciona una Categorias</option>
 
               {categorias.map((categoria) => (
                 <option
@@ -417,8 +496,9 @@ const AgregarProduct = () => {
                   className="form-control"
                   name="Categoria_idCategoria"
                   aria-label="Default select example"
+                  style={{ width: "300px", height: "30px", fontSize: "14px" }}
                 >
-                  <option selected>Selecciona una Categorias</option>
+                  <option selected>  Selecciona una Categorias</option>
                   {categorias.map((categoria) => (
                     <option
                       key={categoria.categoria_id}
@@ -434,7 +514,11 @@ const AgregarProduct = () => {
                   productos.map((producto) => {
                     return (
                       <>
+                      
                         <div className="col-3" key={producto.producto_id}>
+                          <div className="id_producto" id="id_producto"  value={producto.producto_id}>
+                               
+                          </div >
                           <a href="product_details.html">
                             <img src={jordan} />
                           </a>
@@ -459,6 +543,7 @@ const AgregarProduct = () => {
                             type="button"
                             className="btn btn-danger"
                             style={{ margin: "5px" }}
+                            onClick={() => EliminarProducto(producto.producto_id)}
                           >
                             {" "}
                             <i className="bi bi-trash3-fill"> </i>{" "}
@@ -508,6 +593,7 @@ const AgregarProduct = () => {
                     type="button"
                     className="btn btn-danger"
                     style={{ margin: "5px" }}
+                    onClick={() => EliminarCategoria(categoria.categoria_id)}
                   >
                     {" "}
                     <i className="bi bi-trash3-fill"> </i>{" "}
@@ -537,18 +623,19 @@ const AgregarProduct = () => {
                   {usuarios.map((usuario) => {
                     return (
                       <tr key={usuario.id_cliente}>
-                        <th scope="row"> {usuario.id_cliente} </th>
-                        <th scope="row"> {usuario.nombre_cliente} </th>
-                        <th scope="row"> {usuario.email_cliente} </th>
-                        <th scope="row"> {usuario.direccion_cliente} </th>
-                        <th scope="row"> {usuario.rol} </th>
-                        <th scope="row"> {usuario.estado} </th>
+                        <td scope="row"> {usuario.id_cliente} </td>
+                        <td scope="row"> {usuario.nombre_cliente} </td>
+                        <td scope="row"> {usuario.email_cliente} </td>
+                        <td scope="row"> {usuario.direccion_cliente} </td>
+                        <td scope="row"> {usuario.rol} </td>
+                        <td scope="row"> {usuario.estado} </td>
                         <td>
                           {" "}
                           <button
                             type="button"
                             className="btn btn-danger"
                             style={{ margin: "5px" }}
+                            onClick={() => EliminarUsuario(usuario.id_cliente)}
                           >
                             {" "}
                             <i className="bi bi-trash3-fill"> </i>{" "}

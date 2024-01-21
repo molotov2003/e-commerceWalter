@@ -95,6 +95,7 @@ exports.insertarProductos = async (req, res) => {
               });
             } else {
               return res.status(200).json({
+                
                 response: response,
                 mensaje: "Producto agregado correctamente",
                 return: true,

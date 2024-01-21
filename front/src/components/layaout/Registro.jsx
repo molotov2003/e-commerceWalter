@@ -86,7 +86,7 @@ const Registro = () => {
   };
   return (
     <>
-      <div className="wrapper">
+      <div className="wrapperr">
         <div className="inner">
           <form className="custom-form hero-form"
             action="#"
@@ -153,6 +153,6 @@ const Registro = () => {
       </div>
     </>
   );
-};
+}
 
 export default Registro;

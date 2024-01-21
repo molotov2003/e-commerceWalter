@@ -81,7 +81,7 @@ const Inicio = () => {
                 ):(
                   <>
                   <h3 className="text-center">
-                  Lo siento Por ahora no hay cards 😅
+                  Lo siento Por ahora no hay productos disponibles 😅
                 </h3>
                 <p className="text-center">
                   Se actualizara automaticamente la pagina al momento de agregar
@@ -95,99 +95,6 @@ const Inicio = () => {
           </div>
         </div>
       </div>
-
-   
-    <div className="offer">
-        <div className="small-container">
-            <div className="row">
-                <div className="col-2">
-                    <img src="images/exclusive.png" className="offer-img"/>
-                </div>
-                <div className="col-2">
-                    <p>Exclusively Available on RedStore</p>
-                    <h1>Smart Band 4</h1>
-                    <small>The Mi Smart Band 4 fearures a 39.9%larger (than Mi Band 3) AMOLED color full-touch display
-                        with adjustable brightness, so everything is clear as can be.<br/></small>
-                    <a href="products.html" className="btn">Buy Now &#8594;</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   
-    <div className="testimonial">
-        <div className="small-container">
-            <div className="row">
-                <div className="col-3">
-                    <i className="fa fa-quote-left"></i>
-                    <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        industrys standard dummy text.</p>
-                    <div className="rating">
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                    </div>
-                    <img src="images/user-1.png"/>
-                    <h3>Sean Parker</h3>
-                </div>
-                <div className="col-3">
-                    <i className="fa fa-quote-left"></i>
-                    <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        industrys standard dummy text.</p>
-                    <div className="rating">
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                    </div>
-                    <img src="images/user-2.png"/>
-                    <h3>Mike Smith</h3>
-                </div>
-                <div className="col-3">
-                    <i className="fa fa-quote-left"></i>
-                    <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        industrys standard dummy text.</p>
-                    <div className="rating">
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                        <i className="fa fa-star"></i>
-                    </div>
-                    <img src="images/user-3.png"/>
-                    <h3>Mabel Joe</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
-  
-
-    <div className="brands">
-        <div className="small-container">
-            <div className="row">
-                <div className="col-5">
-                    <img src="images/logo-godrej.png"/>
-                </div>
-                <div className="col-5">
-                    <img src="images/logo-oppo.png"/>
-                </div>
-                <div className="col-5">
-                    <img src="images/logo-coca-cola.png"/>
-                </div>
-                <div className="col-5">
-                    <img src="images/logo-paypal.png"/>
-                </div>
-                <div className="col-5">
-                    <img src="images/logo-philips.png"/>
-                </div>
-            </div>
-        </div>
-    </div>
-
  
     <Footerr/>
     </>
