@@ -292,3 +292,45 @@ exports.traerProductos = async (req, res) => {
     });
   }
 };
+
+
+exports.traerProductosfiltrado = async (req, res) => {
+  try {
+
+    const producto_id = req.params.producto_id;
+
+    // Consulta para seleccionar todos los productos
+    let consulta = "SELECT * FROM productos INNER JOIN categorias on productos.id_categoria = categorias.categoria_id WHERE categorias.categoria_id = "+ producto_id;
+
+    baseDeDatos.query(consulta, (err, productos) => {
+      if (err) {
+        console.error("Error en la consulta:", err);
+        return res.status(500).json({
+          error: "Error en la consulta",
+          status: false,
+        });
+      }
+
+      // Verificar si se encontraron productos
+      if (productos.length === 0) {
+        return res.status(404).json({
+          error: "No se encontraron productos",
+          status: false,
+        });
+      } else {
+        // Devolver la lista de productos
+        return res.status(200).json({
+          status: true,
+          mensaje: "Productos listados correctamente",
+          productos: productos,
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Error interno:", error.message);
+    return res.status(500).json({
+      error: "Error interno del servidor",
+      status: false,
+    });
+  }
+};

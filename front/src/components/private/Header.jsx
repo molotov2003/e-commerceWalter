@@ -42,7 +42,7 @@ const Header = () => {
               <div className="navbar">
                 <div className="logo">
                   <a>
-                    <img src={logo} alt="logo" width="125px" />
+                    <img src={logo}   />
                   </a>
                 </div>
                 <nav>
@@ -54,11 +54,10 @@ const Header = () => {
                       <a href="/carrito">carrito</a>
                     </li>               
                     <li>
-                      <a onClick={cerrarSesion} href="/">Cerrar sesion</a>
-                    </li>
-
-                    <li>
                       <a href="/AgregarProduct">Agregar Producto</a>
+                    </li>
+                    <li>
+                      <a onClick={cerrarSesion} href="/">Cerrar sesion</a>
                     </li>
                   </ul>
                 </nav>
