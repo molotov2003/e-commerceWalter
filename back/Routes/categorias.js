@@ -10,8 +10,8 @@ app.use(express.json());
 
 /* RUTAS DEL CONTROLADOR PRODUCTOS */
 
-router.post("/insertarCategoria",categoriasControlador.insertarCagetorias)
+router.post("/insertarCategoria",auth,categoriasControlador.insertarCagetorias)
 router.put("/actualizarCategoria/:categoria_id",auth,categoriasControlador.editarCategorias)
-router.delete("/eliminarCategoria/:categoria_id",categoriasControlador.eliminarCategorias)
-router.get("/listarCategorias",categoriasControlador.traerCategorias)
+router.delete("/eliminarCategoria/:categoria_id",auth,categoriasControlador.eliminarCategorias)
+router.get("/listarCategorias",auth,categoriasControlador.traerCategorias)
 module.exports=router

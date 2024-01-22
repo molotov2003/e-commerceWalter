@@ -4,15 +4,21 @@ import logo from "../../assets/img/logo1.png";
 import user from "../../assets/img/user.png";
 import imgnav from "../../assets/img/image1.png";
 import { useNavigate } from "react-router-dom";
-
+import UseAuth from "../../helpers/UseAuth";
+import Swal from "sweetalert2";
 const Header = () => {
 
+  const { setAutenticado } = UseAuth();
+  //REDIRIGE
+  
+  //ALERTA PARA CERRAR SESION
   const navigate = useNavigate();
 
   //Cierro sesion
   const cerrarSesion = (event) => {
-    const selectedValue = event.target.value;
-    if (selectedValue === "3") {
+  
+    console.log("entro")
+    
       Swal.fire({
         title: "Estas seguro?",
         text: "Quieres salir de la pagina!",
@@ -23,6 +29,7 @@ const Header = () => {
         confirmButtonText: "Si, Salir!",
       }).then((result) => {
         if (result.isConfirmed) {
+          console.log("entro pedrito")
           Swal.fire("Sesion cerrada!", "Exitosamente.", "success");
           console.log("cerrar sesion");
           localStorage.clear();
@@ -30,7 +37,8 @@ const Header = () => {
           navigate("/");
         }
       });
-    }
+    
+    
   }
 
   return (
@@ -57,7 +65,7 @@ const Header = () => {
                       <a href="/AgregarProduct">Agregar Producto</a>
                     </li>
                     <li>
-                      <a onClick={cerrarSesion} href="/">Cerrar sesion</a>
+                      <button onClick={cerrarSesion} style={{backgroundColor:"black", color:"white"}} >Cerrar sesion</button>
                     </li>
                   </ul>
                 </nav>

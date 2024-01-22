@@ -5,6 +5,7 @@ const usuariosRoutes=require("./Routes/Usuarios")
 const productosRoutes=require("./Routes/Productos")
 const categoriaRoutes=require("./Routes/categorias")
 const bodyParser=require("body-parser")
+const path =require("path")
 const cors = require('cors'); // Importa el middleware cors
 const dotenv = require('dotenv');
 dotenv.config();
@@ -20,6 +21,8 @@ app.use(bodyParser.json())
 
 // Middleware CORS
 app.use(cors());
+//para poder  traer las imagenes
+app.use(express.static(path.join(__dirname, "images")));
 
 //Ruta Usuarios
 app.use("/users",usuariosRoutes)

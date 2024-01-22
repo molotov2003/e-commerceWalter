@@ -9,10 +9,10 @@ app.use(express.json());
 
 
 /* RUTAS DEL CONTROLADOR PRODUCTOS */
-router.post("/insertarProducto",productosControlador.insertarProductos)
+router.post("/insertarProducto",auth,productosControlador.insertarProductos)
 router.put("/actualizarProducto/:producto_id",productosControlador.editarProductos)
-router.delete("/eliminarProducto/:producto_id",productosControlador.eliminarProductos)
-router.get("/listarProductos",productosControlador.traerProductos)
-router.get("/listarporCategoria/:producto_id",productosControlador.traerProductosfiltrado)
+router.delete("/eliminarProducto/:producto_id",auth,productosControlador.eliminarProductos)
+router.get("/listarProductos",auth,productosControlador.traerProductos)
+router.get("/listarporCategoria/:producto_id",auth,productosControlador.traerProductosfiltrado)
 
 module.exports=router

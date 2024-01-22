@@ -15,7 +15,8 @@ import jordan from "../../assets/img/jordan.jpg"
 const Inicio = () => {
 
     // Estado para almacenar la URL de la imagen seleccionada
-  
+    const usuario = localStorage.getItem("usuario");
+    const userObj = JSON.parse(usuario);
   //CREAMOS ESTADOS PARA TRAER TODOS LOS ESTUDIOS
   const [estado, setEstado] = useState(null);
   const [productos, setProductos] = useState(null);
@@ -32,8 +33,7 @@ const Inicio = () => {
     fetch(Global.url + "products/listarProductos", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        
+        Authorization: userObj 
       },
     })
       .then((response) => {
@@ -42,7 +42,7 @@ const Inicio = () => {
       .then((data) => {
         setProductos(data.productos);
         setEstado(data.status);
-        console.log(data.productos);
+        console.log("products",data.productos);
       })
       .catch((error) => {
         console.error("Error al obtener datos:", error);
@@ -59,8 +59,7 @@ const Inicio = () => {
     fetch(Global.url + "products/listarporCategoria/"+producto_id, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        
+        Authorization: userObj      
       },
     })
       .then((response) => {
@@ -140,7 +139,7 @@ const Inicio = () => {
                       <>
                   <div className="col-3" key={producto.producto_id}>
                   <a href="product_details.html">
-                    <img src={jordan} />
+                    <img src={"http://localhost:3900/"+producto.img}  />
                   </a>
                   <h3>  {producto.nombre_producto}</h3>
                   <hr />

@@ -14,7 +14,9 @@ import jordan from "../../assets/img/jordan.jpg";
 const AgregarProduct = () => {
   // Estado para almacenar la URL de la imagen seleccionada
   const [imagenPreview, setImagenPreview] = useState(null);
-  //CREAMOS ESTADOS PARA TRAER TODOS LOS ESTUDIOS
+  
+  const usuario = localStorage.getItem("usuario");
+  const userObj = JSON.parse(usuario);
 
   // genero el state para manipular el response del controlador
   const [estado, setEstado] = useState(null);
@@ -117,6 +119,7 @@ const AgregarProduct = () => {
           method: "POST",
           body: JSON.stringify(nuevoPerfil),
           headers: {
+            Authorization: userObj,
             "Content-Type": "application/json",
           },
         }
@@ -149,8 +152,10 @@ const AgregarProduct = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImagen(file);
+  
   };
 
+  
   //////////////////////////////////Agregar Productos
 
   const guardarCards = async (e) => {
@@ -169,22 +174,26 @@ const AgregarProduct = () => {
       const request = await fetch(Global.url + "products/insertarProducto", {
         method: "POST",
         body: formData,
+        headers:{
+          Authorization: userObj        
+        },      
       });
-      console.log(request);
+     
+      console.log(userObj)
       const data = await request.json();
 
-      if (data.status === true) {
+      if (data.status == 200) {
         // MENSAJE EXITOSO
         console.log(data);
         setGuardado("Guardado");
-
-        mostrarAlert(data.mensaje);
-        window.location.reload();
-        return <Navigate to="/AgregarProduct" />;
+        mostrarAlert("Se ha agregado correctamente");
+      
       } else {
-        // MENSAJE DE ERROR
-        setGuardado("Error");
-        mostrarErrorAlert(data.mensaje);
+         // MENSAJE EXITOSO
+         console.log(data);
+         setGuardado("Guardado");
+         mostrarAlert("Se ha agregado correctamente");
+        
       }
     } catch (error) {
       // MENSAJE SI HAY PROBLEMA DEL SERVIDOR
@@ -199,7 +208,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "products/listarProductos", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: userObj 
       },
     })
       .then((response) => {
@@ -208,7 +217,7 @@ const AgregarProduct = () => {
       .then((data) => {
         setProductos(data.productos);
         setEstado(data.status);
-        console.log(data.productos);
+        console.log("products",data.productos);
       })
       .catch((error) => {
         console.error("Error al obtener datos:", error);
@@ -221,7 +230,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "products/eliminarProducto/" + producto_id, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json",
+       Authorization: userObj
       },
     })
       .then((response) => {
@@ -245,7 +254,7 @@ const AgregarProduct = () => {
       const response = await fetch(Global.url + "categorias/listarCategorias", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: userObj
         },
       });
 
@@ -272,8 +281,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "products/listarporCategoria/"+producto_id, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        
+        Authorization: userObj      
       },
     })
       .then((response) => {
@@ -294,7 +302,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "categorias/eliminarCategoria/" + categoria_id, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: userObj
       },
     })
       .then((response) => {
@@ -319,7 +327,7 @@ const AgregarProduct = () => {
       const response = await fetch(Global.url + "users/listarusuarios", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: userObj        
         },
       });
 
@@ -341,7 +349,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "users/eliminarUsuario/" + id_cliente, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json",
+        Authorization: userObj
       },
     })
       .then((response) => {
@@ -399,7 +407,7 @@ const AgregarProduct = () => {
           <div className="form-wrapper">
             <label htmlFor="">Id del Producto</label>
             <input
-              type="text"
+              type="number"
               className="form-control"
               name="producto_id"
               id="producto_id"
@@ -509,7 +517,7 @@ const AgregarProduct = () => {
           <div className="form-wrapper">
             <label htmlFor="">Id del Producto</label>
             <input
-              type="text"
+              type="number"
               className="form-control"
               name="categoria_id"
               id="categoria_id"
@@ -728,7 +736,7 @@ const AgregarProduct = () => {
                             value={producto.producto_id}
                           ></div>
                           <a href="product_details.html">
-                            <img src={jordan} />
+                            <img src={"http://localhost:3900/"+producto.img} />  
                           </a>
                           <h3> {producto.nombre_producto}</h3>
                           <hr />
@@ -787,6 +795,8 @@ const AgregarProduct = () => {
           </div>
         </div>
 
+<br />
+<br />
         <h1>Categorias</h1>
         <br />
 
@@ -832,6 +842,7 @@ const AgregarProduct = () => {
                 <th scope="col">Email</th>
                 <th scope="col">Direccion</th>
                 <th scope="col">rol</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Eliminar</th>
               </tr>
             </thead>
