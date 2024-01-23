@@ -64,8 +64,9 @@ const Login = () => {
           localStorage.removeItem("usuario");
         }
         localStorage.setItem("usuario", JSON.stringify(data.token));
+        localStorage.setItem("rol", JSON.stringify(data.rol));
         console.log(data.token);
-
+        console.log(data.rol);
         //MENSAJE EXITOSO
         setGuardado("Guardado");
         Swal.fire({

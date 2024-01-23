@@ -271,6 +271,7 @@ exports.loginUsuario = async (req, res) => {
         status:200,
         success:true,
         token: token,
+        rol: respuesta,
         message: 'Bienvenido, se ha enviado un token a su correo electrónico, por favor, ingréselo en la doble autenticación.',
       });
     }

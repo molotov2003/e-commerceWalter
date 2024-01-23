@@ -9,16 +9,22 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     autenticarUsuario();
   }, []);
+
   const autenticarUsuario = async () => {
     const usuario = localStorage.getItem("usuarios");
+
+    const rol = localStorage.getItem("rol");
+    
+    console.log(rol)
     console.log(usuario)
     try {
       const userObj = JSON.parse(usuario);
+     
       // if (!userObj.token || !userObj.nombre) {
       //   return false;
         
       // }
-      console.log(userObj)
+      console.log("dfdf",userObj)
       const request = await fetch(
         Global.url + "users/listarunUsuario/" + userObj.id_cliente,
         {
@@ -35,9 +41,9 @@ export const AuthProvider = ({ children }) => {
       }
      
       const data = await request.json();
-
-      setAutenticado(data.usuario);
-      console.log(data)
+      
+      setAutenticado(data.usuario,data.rol);
+      console.log(data.rol)
     } catch (error) {
       console.error("Error en la solicitud:", error.message);
 

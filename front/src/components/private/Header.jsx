@@ -9,37 +9,40 @@ import Swal from "sweetalert2";
 const Header = () => {
 
   const { setAutenticado } = UseAuth();
-  //REDIRIGE
+  const { Autenticado } = UseAuth();
   
+
+  //REDIRIGE
+   console.log(Autenticado)
   //ALERTA PARA CERRAR SESION
   const navigate = useNavigate();
 
   //Cierro sesion
   const cerrarSesion = (event) => {
+    console.log("entro");
+
+    Swal.fire({
+      title: "Estas seguro?",
+      text: "Quieres salir de la pagina!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Salir!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("entro pedrito");
+        Swal.fire("Sesion cerrada!", "Exitosamente.", "success");
+        console.log("cerrar sesion");
+        localStorage.removeItem("usuario");
+        setAutenticado({});
+        navigate("/");
+      }
+    });
+
   
-    console.log("entro")
-    
-      Swal.fire({
-        title: "Estas seguro?",
-        text: "Quieres salir de la pagina!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Si, Salir!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          console.log("entro pedrito")
-          Swal.fire("Sesion cerrada!", "Exitosamente.", "success");
-          console.log("cerrar sesion");
-          localStorage.clear();
-          setAutenticado({});
-          navigate("/");
-        }
-      });
-    
-    
-  }
+
+  };
 
   return (
     <>
@@ -50,7 +53,7 @@ const Header = () => {
               <div className="navbar">
                 <div className="logo">
                   <a>
-                    <img src={logo}   />
+                    <img src={logo} />
                   </a>
                 </div>
                 <nav>
@@ -60,21 +63,35 @@ const Header = () => {
                     </li>
                     <li>
                       <a href="/carrito">carrito</a>
-                    </li>               
-                    <li>
-                      <a href="/AgregarProduct">Agregar Producto</a>
                     </li>
                     <li>
-                      <button onClick={cerrarSesion} style={{backgroundColor:"black", color:"white"}} >Cerrar sesion</button>
+                      {Autenticado.rol[3] == 1 ? (
+                        <>
+                          {/* SECCION CARRITO DE COMPRAS */}
+                          <Forms Autenticado={Autenticado} />
+                          <a href="/AgregarProduct">Agregar Producto</a>
+                        </>
+                      ) : (
+                        " "
+                      )}
+                     
+                    </li>
+                    <li>
+                      <button
+                        onClick={cerrarSesion}
+                        style={{ backgroundColor: "black", color: "white" }}
+                      >
+                        Cerrar sesion
+                      </button>
                     </li>
                   </ul>
                 </nav>
-               
+
                 <img src="images/menu.png" className="menu-icon" />
               </div>
               <div className="row">
                 <div className="col-2">
-                  <h1 >
+                  <h1>
                     Give Your Workout <br /> A New Style!
                   </h1>
 

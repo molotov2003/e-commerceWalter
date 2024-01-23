@@ -10,11 +10,12 @@ import logo from "../../assets/img/logo1.png";
 import user from "../../assets/img/user.png";
 import imgnav from "../../assets/img/image1.png";
 import jordan from "../../assets/img/jordan.jpg";
+import EditarProducto from "../../components/private/EditarProducto";
 
 const AgregarProduct = () => {
   // Estado para almacenar la URL de la imagen seleccionada
   const [imagenPreview, setImagenPreview] = useState(null);
-  
+
   const usuario = localStorage.getItem("usuario");
   const userObj = JSON.parse(usuario);
 
@@ -26,9 +27,15 @@ const AgregarProduct = () => {
   const [usuarios, setusuarios] = useState(null);
   // Hago el state para las categorias
   const [categorias, setCategorias] = useState([]);
+  // capturo la categoria selecionada
+  const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
 
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
 
+  // uso las modales para editar
+  const [mostrarModalEditar, setMostrarModalEditar] = useState(false);
+  const [modalEditar, setModalEditar] = useState(false);
+
+  ///// capturo los inputs para insertar
   const [id, setId] = useState("");
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -64,6 +71,32 @@ const AgregarProduct = () => {
     window.location.reload();
     return <Navigate to="/Inicio" />;
   }
+  ///Modal para Editar
+  //MODAL PARA AGREGAR
+  //MODAL PARA EDITAR
+  const abrirModalEditar = (producto) => {
+    if (
+      
+      producto.nombre_producto &&
+      producto.descripcion_producto &&
+      producto.precio_producto &&
+      producto.stock_producto &&
+      producto.id_categoria
+    ) {
+      setMostrarModalEditar(producto);
+      setModalEditar(true);
+      console.log(setModalEditar(true))
+    } else {
+      console.error("El producto no se ha editado correctamente");
+    }
+  };
+
+  
+  ////Abrir la modal
+  const agregarModalEditar = () => {
+    setModalEditar(false);
+  };
+
   ///////////////////// Editar producto
   const editarProducto = async (e) => {
     e.preventDefault();
@@ -152,10 +185,8 @@ const AgregarProduct = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImagen(file);
-  
   };
 
-  
   //////////////////////////////////Agregar Productos
 
   const guardarCards = async (e) => {
@@ -174,12 +205,12 @@ const AgregarProduct = () => {
       const request = await fetch(Global.url + "products/insertarProducto", {
         method: "POST",
         body: formData,
-        headers:{
-          Authorization: userObj        
-        },      
+        headers: {
+          Authorization: userObj,
+        },
       });
-     
-      console.log(userObj)
+
+      console.log(userObj);
       const data = await request.json();
 
       if (data.status == 200) {
@@ -187,13 +218,11 @@ const AgregarProduct = () => {
         console.log(data);
         setGuardado("Guardado");
         mostrarAlert("Se ha agregado correctamente");
-      
       } else {
-         // MENSAJE EXITOSO
-         console.log(data);
-         setGuardado("Guardado");
-         mostrarAlert("Se ha agregado correctamente");
-        
+        // MENSAJE EXITOSO
+        console.log(data);
+        setGuardado("Guardado");
+        mostrarAlert("Se ha agregado correctamente");
       }
     } catch (error) {
       // MENSAJE SI HAY PROBLEMA DEL SERVIDOR
@@ -208,7 +237,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "products/listarProductos", {
       method: "GET",
       headers: {
-        Authorization: userObj 
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -217,7 +246,7 @@ const AgregarProduct = () => {
       .then((data) => {
         setProductos(data.productos);
         setEstado(data.status);
-        console.log("products",data.productos);
+        console.log("products", data.productos);
       })
       .catch((error) => {
         console.error("Error al obtener datos:", error);
@@ -230,7 +259,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "products/eliminarProducto/" + producto_id, {
       method: "DELETE",
       headers: {
-       Authorization: userObj
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -254,7 +283,7 @@ const AgregarProduct = () => {
       const response = await fetch(Global.url + "categorias/listarCategorias", {
         method: "GET",
         headers: {
-          Authorization: userObj
+          Authorization: userObj,
         },
       });
 
@@ -273,15 +302,14 @@ const AgregarProduct = () => {
 
   ///traigo los producto filtados por la categoria
   const cargoproductofiltrado = async (producto_id) => {
-    
     console.log(producto_id);
     // Limpia la variable de productos
     setProductos([]);
 
-    fetch(Global.url + "products/listarporCategoria/"+producto_id, {
+    fetch(Global.url + "products/listarporCategoria/" + producto_id, {
       method: "GET",
       headers: {
-        Authorization: userObj      
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -290,7 +318,7 @@ const AgregarProduct = () => {
       .then((data) => {
         setProductos(data.productos);
         setEstado(data.status);
-        console.log("el listado ",data.productos);  
+        console.log("el listado ", data.productos);
       })
       .catch((error) => {
         console.error("Error al obtener datos:", error);
@@ -302,7 +330,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "categorias/eliminarCategoria/" + categoria_id, {
       method: "DELETE",
       headers: {
-        Authorization: userObj
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -327,7 +355,7 @@ const AgregarProduct = () => {
       const response = await fetch(Global.url + "users/listarusuarios", {
         method: "GET",
         headers: {
-          Authorization: userObj        
+          Authorization: userObj,
         },
       });
 
@@ -349,7 +377,7 @@ const AgregarProduct = () => {
     fetch(Global.url + "users/eliminarUsuario/" + id_cliente, {
       method: "DELETE",
       headers: {
-        Authorization: userObj
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -372,9 +400,9 @@ const AgregarProduct = () => {
     traerCategorias();
     cargarEstudio();
     traerusuarios();
-    cargoproductofiltrado()
+    cargoproductofiltrado();
   }, []);
-
+console.log(modalEditar)
   return (
     <>
       <Header />
@@ -548,156 +576,6 @@ const AgregarProduct = () => {
         </form>
       </div>
 
-      {/* Modal */}
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Editar Producto
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-             
-                <form
-                  className="custom-form hero-form"
-                  action="#"
-                  method="get"
-                  role="form"
-                  onSubmit={editarProducto}
-                
-                  encType="multipart/form-data"
-                >
-                  {/* ... Otros campos de formulario ... */}
-
-                  <div className="form-wrapper">
-                    <label htmlFor="">Id del Producto</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="producto_id"
-                      id="producto_id"
-                      placeholder={(e) => setNombre(e.target.value)}
-                      onChange={(e) => setId(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-wrapper">
-                    <label htmlFor="">Nombre Del Producto</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="nombre_producto"
-                      id="nombre_producto"
-                      onChange={(e) => setNombre(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-wrapper">
-                    <label htmlFor="">Descripcion</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="descripcion_producto"
-                      id="descripcion_producto"
-                      onChange={(e) => setDescripcion(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-wrapper">
-                    <label htmlFor="">Precio</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="precio_producto"
-                      id="precio_producto"
-                      onChange={(e) => setPrecio(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-wrapper">
-                    <label htmlFor="">Cantidad</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="stock_producto"
-                      id="stock_producto"
-                      onChange={(e) => setStock(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-wrapper">
-                    <label htmlFor="">Agregar Categoria</label>
-                    <select
-                      onChange={(e) => setCategoriass(e.target.value)}
-                      className="form-control"
-                      name="Categoria_idCategoria"
-                      aria-label="Default select example"
-                    >
-                      <option selected>Selecciona una Categorias</option>
-
-                      {categorias.map((categoria) => (
-                        <option
-                          key={categoria.categoria_id}
-                          value={categoria.categoria_id}
-                          name="id_categoria"
-                          id="id_categoria"
-                        >
-                          {categoria.nombre_categoria}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="form-wrapper">
-                    <label htmlFor="">Imagen</label>
-                    <input
-                      type="file"
-                      id="img"
-                      name="img"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                  </div>
-
-                  {/* Resto del formulario... */}
-
-                  <button type="submit" className="btn btn-success">
-                    Editar Producto
-                  </button>
-                  <br />
-                  
-                </form>
-              
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="container-fluid">
         <div className="row">
           <div className="col-10">
@@ -705,13 +583,15 @@ const AgregarProduct = () => {
               <h2 className="title">Productos</h2>
 
               <div className="row">
-              <select
+                <select
                   className="form-control"
                   name="producto_id"
                   id="producto_id"
                   aria-label="Default select example"
                   value={opcionSeleccionada}
-                  onChange={(event) => cargoproductofiltrado(event.target.value)}
+                  onChange={(event) =>
+                    cargoproductofiltrado(event.target.value)
+                  }
                 >
                   <option selected> Selecciona una Categorias</option>
                   {categorias.map((categoria) => (
@@ -736,7 +616,9 @@ const AgregarProduct = () => {
                             value={producto.producto_id}
                           ></div>
                           <a href="product_details.html">
-                            <img src={"http://localhost:3900/"+producto.img} />  
+                            <img
+                              src={"http://localhost:3900/" + producto.img}
+                            />
                           </a>
                           <h3> {producto.nombre_producto}</h3>
                           <hr />
@@ -771,7 +653,8 @@ const AgregarProduct = () => {
                             type="button"
                             className="btn btn-success"
                             data-bs-toggle="modal"
-                            data-bs-target="#exampleModal"
+                            data-bs-target={`#exampleModal${producto.producto_id}`}
+                            onClick={() => abrirModalEditar(producto)}
                           >
                             <i className="bi bi-pencil-square"></i>
                           </button>
@@ -795,8 +678,8 @@ const AgregarProduct = () => {
           </div>
         </div>
 
-<br />
-<br />
+        <br />
+        <br />
         <h1>Categorias</h1>
         <br />
 
@@ -878,6 +761,17 @@ const AgregarProduct = () => {
         )}
         <br />
       </div>
+      {modalEditar && mostrarModalEditar && (
+        <EditarProducto
+          nombre_producto={mostrarModalEditar.nombre_producto}
+          descripcion_producto={mostrarModalEditar.descripcion_producto}
+          precio_producto={mostrarModalEditar.precio_producto}
+          stock_producto={mostrarModalEditar.stock_producto}
+          id_categoria={mostrarModalEditar.id_categoria}
+          producto_id={mostrarModalEditar.producto_id}
+          proyectoEditado={agregarModalEditar}
+        />
+      )}
       <Footerr />
     </>
   );

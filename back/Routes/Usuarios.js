@@ -14,7 +14,7 @@ app.use(express.json());
 router.post("/insertar",usuarioControlador.insertarUsuario)
 router.post("/login",usuarioControlador.loginUsuario)
 router.post("/emailValidator",usuarioControlador.emailValidator)
-router.put("/editarUsuario/:id_cliente",auth,usuarioControlador.editarUsuario)
+router.put("/editarUsuario/:id_cliente",usuarioControlador.editarUsuario)
 router.delete("/eliminarUsuario/:idCliente",auth,usuarioControlador.eliminarUsuario)
 router.get("/listarUsuarios",auth,usuarioControlador.traerUsuarios)
 router.get("/listarunUsuario/:id",usuarioControlador.traerUnUsuario)
