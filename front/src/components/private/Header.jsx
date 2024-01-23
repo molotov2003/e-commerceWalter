@@ -16,7 +16,9 @@ const Header = () => {
    console.log(Autenticado)
   //ALERTA PARA CERRAR SESION
   const navigate = useNavigate();
-
+   const usuario =  localStorage.getItem("rol");
+   let rol = JSON.parse(usuario)
+   console.log("EL ROL",rol[0].rol)
   //Cierro sesion
   const cerrarSesion = (event) => {
     console.log("entro");
@@ -65,10 +67,9 @@ const Header = () => {
                       <a href="/carrito">carrito</a>
                     </li>
                     <li>
-                      {Autenticado.rol[3] == 1 ? (
+                      {rol[0].rol == 1 ? (
                         <>
-                          {/* SECCION CARRITO DE COMPRAS */}
-                          <Forms Autenticado={Autenticado} />
+                          
                           <a href="/AgregarProduct">Agregar Producto</a>
                         </>
                       ) : (
