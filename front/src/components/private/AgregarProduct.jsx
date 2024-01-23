@@ -401,7 +401,7 @@ const AgregarProduct = () => {
     cargarEstudio();
     traerusuarios();
     cargoproductofiltrado();
-  }, []);
+  }, [modalEditar]);
 console.log(modalEditar)
   return (
     <>

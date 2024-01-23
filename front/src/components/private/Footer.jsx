@@ -37,7 +37,7 @@ const footer = () => {
             </div>
           </div>
           <hr />
-          <p className="copyright">Copyright 2020 - Samwit Adhikary</p>
+          <p className="copyright" style={{ color: "white" }} >Copyright 2020 - Samwit Adhikary</p>
         </div>
       </div>
     </>

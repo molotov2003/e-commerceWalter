@@ -1,20 +1,24 @@
 
 body{
     font-family: 'Poppins', sans-serif;
-   
+    padding: 0px;
+    background-color: #000;
 }
 
-nav{
-    flex: 1;
-    text-align: right;
+header{
+    background-color: black;
+    padding: 10px;
+    font-size: 20px;
 }
-nav ul{
-    display: inline-block;
-    list-style-type: none;
+
+.cabecera{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-nav ul li{
-    display: inline-block;
-    margin-right: 20px;
+
+select{
+    background-color: #90E83A;
 }
 a{
     text-decoration: none;
@@ -39,23 +43,51 @@ p{
     flex-basis: 50%;
     min-width: 300px;
 }
-.col-2 img{
-    max-width: 100%;
-    padding: 50px 0;
-}
+
 .col-2 h1{
     font-size: 50px;
     line-height: 60px;
-    margin: 25px 0;
+    margin: 100px 0;
 }
 
-#niko{
-    background-color: black;
+.navbarr{
+    background-color: #636363;
+    text-align: center;
+    padding: 10px; /* Agregar relleno alrededor del contenido */
+    
 }
+
+
+
+nav {
+    display: inline-block; /* Alinear el nav como bloque en línea */
+}
+
+#MenuItems {
+    list-style-type: none; /* Quitar los puntos de la lista */
+    padding: 0; /* Eliminar el relleno de la lista */
+    margin: 0; /* Eliminar el margen de la lista */
+}
+
+
+
+#MenuItems a {
+    text-decoration: none; /* Quitar el subrayado del enlace */
+    padding: 8px 12px; /* Ajustar el relleno del enlace */
+    color: #cfb658; /* Color del texto del enlace */
+}
+
+#MenuItems a:hover {
+    
+    color: white; /* Cambiar el color del texto al pasar el ratón sobre el enlace */
+}
+
+
 
 .header{
    background: black;
     color: white;
+   
 }
 
     .categories{
@@ -69,9 +101,7 @@ p{
     min-width: 250px;
     margin-bottom: 30px;
 }
-.col-3 img{
-    width: 100%;
-}
+
 
 .col-4{
     flex-basis: 25%;
@@ -80,9 +110,7 @@ p{
     margin-bottom: 50px;
     transition: transform 0.5s;
 }
-.col-4 img{
-    width: 100%;
-}
+
 .title{
     text-align: center;
     margin: 0 auto 80px;
@@ -92,7 +120,7 @@ p{
 }
 .title::after{
     content: '';
-    background: #ff523b;
+    background: #cfb658;
     width: 80px;
     height: 5px;
     border-radius: 5px;
@@ -124,7 +152,7 @@ h4{
     padding: 50px;
 }
 small{
-    color: #555;
+    color: white;
 }
 
 /* Testimonial */
@@ -153,11 +181,11 @@ small{
 .col-3 p{
     font-size: 12px;
     margin: 12px 0;
-    color: #777;
+    color: white;
 }
 .testimonial .col-3 h3{
     font-weight: 600;
-    color: #555;
+    color: #cfb658;
     font-size: 16px;
 }
 /* Brands */
@@ -169,19 +197,19 @@ small{
 /* Footer */
 .footer{
     background: black;
-    color: #8a8a8a;
+    color: white;
     font-size: 14px;
     padding: 60px 0 20px;
 }
 .footer p{
-    color: #8a8a8a;
+    color: white;
 }
 .footer h3{
     color: #fff;
     margin-bottom: 20px;
 }
 .footer-col-1, .footer-col-2, .footer-col-3, .footer-col-4{
-    min-width: 250px;
+    min-width: 50px;
     margin-bottom: 20px;
 }
 .footer-col-1{
@@ -199,20 +227,14 @@ small{
     flex-basis: 12%;
     text-align: center;
 }
-ul{
-    list-style-type: none;
-}
-.app-logo{
-    margin-top: 20px;
-}
-.app-logo img{
-    width: 140px;
-}
+
+
+
 .footer hr{
     border: none;
     background: #b5b5b5;
     height: 1px;
-    margin: 20px 0;
+    margin: 80px 0;
 }
 .copyright{
     text-align: center;
@@ -226,14 +248,15 @@ ul{
 /* All Products */
 .row-2{
     justify-content: space-between;
-    margin: 100px auto 50px;
+    
 }
 select{
-    border: 1px solid #ff523b;
+    border: 1px solid #fff;
     padding: 5px;
 }
 select:focus{
     outline: none;
+    border-color: white;
 }
 
 
@@ -264,7 +287,7 @@ select:focus{
     padding-left: 10px;
     font-size: 20px;
     margin-left: 10px;
-    border: 1px solid #ff523b;
+   
     margin-right: 10px;
 }
 input:focus{
@@ -320,47 +343,23 @@ th:last-child{
 
 /* Account page */
 .account-page{
-    padding: 50px 0;
+   
     background: radial-gradient(#fff, #ffd6d6);
 }
 
-
-
-#LoginForm{
-    left: -300px;
+.row{
+    padding-left: 0px;
+    padding-right: 0px;
 }
-#RegForm{
-    left: 0;
+
+.col-12{
+    padding: 0px;
 }
 
 
 
 /* Media query for menu */
-@media only screen and (max-width: 800px){
 
-    nav ul{
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: #333;
-        width: 100%;
-        overflow: hidden;
-        transition: max-height 0.5s;
-    }
-    nav ul li{
-        display: block;
-        margin-right: 50px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    nav ul li a{
-        color: white;
-    }
-    .menu-icon{
-        display: block;
-        cursor: pointer;
-    }
-}
 
 /* Media query for 600 screen size */
 @media only screen and (max-width: 600px){

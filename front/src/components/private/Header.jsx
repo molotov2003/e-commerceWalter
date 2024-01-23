@@ -10,15 +10,15 @@ const Header = () => {
 
   const { setAutenticado } = UseAuth();
   const { Autenticado } = UseAuth();
-  
+
 
   //REDIRIGE
-   console.log(Autenticado)
+  console.log(Autenticado)
   //ALERTA PARA CERRAR SESION
   const navigate = useNavigate();
-   const usuario =  localStorage.getItem("rol");
-   let rol = JSON.parse(usuario)
-   console.log("EL ROL",rol[0].rol)
+  const usuario = localStorage.getItem("rol");
+  let rol = JSON.parse(usuario)
+
   //Cierro sesion
   const cerrarSesion = (event) => {
     console.log("entro");
@@ -42,7 +42,7 @@ const Header = () => {
       }
     });
 
-  
+
 
   };
 
@@ -50,64 +50,47 @@ const Header = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-          <div id="niko" className="col-12">
-            <div className="header">
-              <div className="navbar">
-                <div className="logo">
-                  <a>
-                    <img src={logo} />
-                  </a>
-                </div>
-                <nav>
-                  <ul id="MenuItems">
-                    <li>
-                      <a href="/inicio">Home</a>
-                    </li>
-                    <li>
-                      <a href="/carrito">carrito</a>
-                    </li>
-                    <li>
-                      {rol[0].rol == 1 ? (
-                        <>
-                          
-                          <a href="/AgregarProduct">Agregar Producto</a>
-                        </>
-                      ) : (
-                        " "
-                      )}
-                     
-                    </li>
-                    <li>
-                      <button
-                        onClick={cerrarSesion}
-                        style={{ backgroundColor: "black", color: "white" }}
-                      >
-                        Cerrar sesion
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
+          <div className="col-12">
+            <br />
+            <div className="cabecera">
+              <img src={logo} alt="" style={{ maxWidth: "120px" }} />
 
-                <img src="images/menu.png" className="menu-icon" />
-              </div>
-              <div className="row">
-                <div className="col-2">
-                  <h1>
-                    Give Your Workout <br /> A New Style!
-                  </h1>
+            </div>
+            <br />
+          </div>
+          <div className="col-12">
+            <div className="navbarr">
+              <nav>
+                <ul id="MenuItems">
 
-                  <a href="" className="btn">
-                    Explore Now &#8594;
-                  </a>
-                </div>
-                <div className="col-2">
-                  <img src={imgnav} />
-                </div>
-              </div>
+                  <a href="/inicio" >Home</a>
+
+                  <a href="/carrito">carrito</a>
+
+
+                  {rol[0].rol == 1 ? (
+                    <>
+
+                      <a href="/AgregarProduct">Agregar Producto</a>
+                    </>
+                  ) : (
+                    " "
+                  )}
+
+
+                  <a href="/" onClick={cerrarSesion}
+                    style={{ backgroundColor: "#636363" }}> Cerrar sesion</a>
+
+
+
+                </ul>
+              </nav>
             </div>
           </div>
         </div>
       </div>
+
+
     </>
   );
 };

@@ -7,9 +7,9 @@ const jwtVerified = require("./jwtVerified");
 const util = require("util"); //la trae por defecto node js me permite usar async/await opcion a fetch
 const { json } = require("body-parser");
 const baseDeDatosQuery = util.promisify(baseDeDatos.query).bind(baseDeDatos);
-const dotenv = require('dotenv');
-const enviarCorreoElectronico=require("../functions/EnviarCorreo")
-const generarCodigoAcceso=require("../functions/generarCodigoAcceso")
+const dotenv = require("dotenv");
+const enviarCorreoElectronico = require("../functions/EnviarCorreo");
+const generarCodigoAcceso = require("../functions/generarCodigoAcceso");
 // Cargar variables de entorno desde el archivo .env
 dotenv.config();
 
@@ -18,7 +18,7 @@ dotenv.config();
  * Funcion insertar usuarios
  * @author Mario Miranda
  * @copyright 14/12/2023
- * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria 
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id de la categoria
  * @param {Response} res -los datos que se devolveran al cliente
  * @returns {boolean} -true  y un mensaje de confirmacion en caso de error le muestra el mensaje detallado
  */
@@ -28,58 +28,44 @@ exports.insertarUsuario = async (req, res) => {
     nombre_cliente: req.body.nombre_cliente,
     email_cliente: req.body.email_cliente,
     direccion_cliente: req.body.direccion_cliente,
-    password_cliente: bcrypt.hashSync(req.body.password_cliente,7),
+    password_cliente: bcrypt.hashSync(req.body.password_cliente, 7),
   };
 
   // Validar el correo electrónico antes de insertar un nuevo usuario
-  let consulta="SELECT email_cliente FROM clientes WHERE email_cliente = ?"
-  const [rows] = await baseDeDatosQuery(
-   consulta,
-    [data.email_cliente]
-  );
+  let consulta = "SELECT email_cliente FROM clientes WHERE email_cliente = ?";
+  const [rows] = await baseDeDatosQuery(consulta, [data.email_cliente]);
 
   if (rows && rows.email_cliente !== undefined) {
     return res.status(400).json({ error: "Email ya está en uso" });
   }
 
   // Modificar la inserción del usuario para usar la consulta parametrizada
-  const sql =
-    "INSERT INTO clientes (id_cliente, nombre_cliente, email_cliente, direccion_cliente, password_cliente, rol,estado) VALUES (?, ?, ?, ?, ?,1,1)";
+  const sql = "INSERT INTO clientes (id_cliente, nombre_cliente, email_cliente, direccion_cliente, password_cliente, rol,estado) VALUES (?, ?, ?, ?, ?,0,1)";
 
-  baseDeDatos.query(
-    sql,
-    [
-      data.id_cliente,
-      data.nombre_cliente,
-      data.email_cliente,
-      data.direccion_cliente,
-      data.password_cliente,
-    ],
-    (err, results) => {
-      try {
-        if (err) {
-          console.error("Error en la consulta:", err);
-          return res.status(500).json({
-            error: true,
-            mensaje: "Error en la consulta",
-            errorDetails: err.message,
-          });
-        } else {
-          return res.status(200).json({
-            success: true,
-            message: "Usuario insertado correctamente",
-          });
-        }
-      } catch (error) {
-        console.error("Error interno:", error.message);
-        return res.status(400).json({
+  baseDeDatos.query(sql, [data.id_cliente, data.nombre_cliente, data.email_cliente, data.direccion_cliente, data.password_cliente], (err, results) => {
+    try {
+      if (err) {
+        console.error("Error en la consulta:", err);
+        return res.status(500).json({
           error: true,
-          mensaje: "Error interno",
-          errorDetails: error.message,
+          mensaje: "Error en la consulta",
+          errorDetails: err.message,
+        });
+      } else {
+        return res.status(200).json({
+          success: true,
+          message: "Usuario insertado correctamente",
         });
       }
+    } catch (error) {
+      console.error("Error interno:", error.message);
+      return res.status(400).json({
+        error: true,
+        mensaje: "Error interno",
+        errorDetails: error.message,
+      });
     }
-  );
+  });
 };
 
 //controlladores de editar usuarios
@@ -102,46 +88,36 @@ exports.editarUsuario = async (req, res) => {
     };
 
     // Actualizar el usuario en la base de datos
-    baseDeDatos.query(
-      "UPDATE clientes SET nombre_cliente = ?, email_cliente = ?, direccion_cliente = ?, password_cliente = ? WHERE id_cliente = ?",
-      [
-        data.nombre_cliente,
-        data.email_cliente,
-        data.direccion_cliente,
-        data.password_cliente,
-        id_cliente,
-      ],
-      (err, result) => {
-        try {
-          if (err) {
-            return res.status(500).json({
-              mensaje: "Error en la consulta",
-              error: true,
-              detalles: err.message, // Agregar detalles del error
+    baseDeDatos.query("UPDATE clientes SET nombre_cliente = ?, email_cliente = ?, direccion_cliente = ?, password_cliente = ? WHERE id_cliente = ?", [data.nombre_cliente, data.email_cliente, data.direccion_cliente, data.password_cliente, id_cliente], (err, result) => {
+      try {
+        if (err) {
+          return res.status(500).json({
+            mensaje: "Error en la consulta",
+            error: true,
+            detalles: err.message, // Agregar detalles del error
+          });
+        } else {
+          // Verificar si se realizó la actualización correctamente
+          if (result.affectedRows > 0) {
+            return res.status(200).json({
+              mensaje: "Actualizado correctamente",
+              detalles: true,
             });
           } else {
-            // Verificar si se realizó la actualización correctamente
-            if (result.affectedRows > 0) {
-              return res.status(200).json({
-                mensaje: "Actualizado correctamente",
-                detalles: true,
-              });
-            } else {
-              return res.status(404).json({
-                mensaje: "Usuario no encontrado",
-                error: true,
-                mensaje2: result,
-              });
-            }
+            return res.status(404).json({
+              mensaje: "Usuario no encontrado",
+              error: true,
+              mensaje2: result,
+            });
           }
-        } catch (error) {
-          return res.status(400).json({
-            error: true,
-            mensaje: "Error interno",
-          });
         }
+      } catch (error) {
+        return res.status(400).json({
+          error: true,
+          mensaje: "Error interno",
+        });
       }
-    );
+    });
   } catch (error) {
     console.error("Error interno:", error.message);
     return res.status(500).json({
@@ -156,7 +132,7 @@ exports.editarUsuario = async (req, res) => {
  * Funcion eliminar usuario
  * @author Mario Miranda
  * @copyright 14/12/2023
- * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id del usuario 
+ * @param {require} req -datos solicitados para poder ejecutar la funcion, en este caso se necesita el id del usuario
  * @param {Response} res -los datos que se devolveran al cliente
  * @returns {boolean} -la respuesta, y un mensaje de confirmacion y una variable true
  */
@@ -186,7 +162,6 @@ exports.eliminarUsuario = async (req, res) => {
   }
 };
 
-
 //Hago la ruta para buscar si el email ya esta registrado en el sistema
 /**
  * Funcion validar correo electronico
@@ -204,30 +179,19 @@ exports.emailValidator = async (req, res) => {
 
     // Validamos que lleguen los datos completos
     if (!data.email_cliente) {
-      return res
-        .status(400)
-        .json({ response: false, error: "Debe enviar los datos completos" });
+      return res.status(400).json({ response: false, error: "Debe enviar los datos completos" });
     }
 
-    const [rows] = await baseDeDatosQuery(
-      "SELECT email_cliente FROM clientes WHERE email_cliente = ?",
-      [data.email_cliente]
-    );
+    const [rows] = await baseDeDatosQuery("SELECT email_cliente FROM clientes WHERE email_cliente = ?", [data.email_cliente]);
 
     if (rows && rows.email_cliente !== undefined) {
-      return res
-        .status(400)
-        .json({ response: false, error: "Email ya está en uso" });
+      return res.status(400).json({ response: false, error: "Email ya está en uso" });
     } else {
-      return res
-        .status(201)
-        .json({ response: true, message: "Email no está en uso" });
+      return res.status(201).json({ response: true, message: "Email no está en uso" });
     }
   } catch (error) {
     console.error("Error en la consulta:", error);
-    return res
-      .status(500)
-      .json({ response: false, error: "Error en la consulta" });
+    return res.status(500).json({ response: false, error: "Error en la consulta" });
   }
 };
 
@@ -248,17 +212,14 @@ exports.loginUsuario = async (req, res) => {
 
     // Validamos que lleguen los datos completos
     if (!email_cliente || !password_cliente) {
-      return res.status(400).json({ error: 'Debe enviar los datos completos' });
+      return res.status(400).json({ error: "Debe enviar los datos completos" });
     }
 
     // Consultar usuario por email
-    const respuesta = await baseDeDatosQuery(
-      'SELECT * FROM clientes WHERE email_cliente = ?',
-      [email_cliente]
-    );
+    const respuesta = await baseDeDatosQuery("SELECT * FROM clientes WHERE email_cliente = ?", [email_cliente]);
 
     if (respuesta.length === 0 || !(await bcrypt.compare(password_cliente, respuesta[0].password_cliente))) {
-      return res.status(401).json({ error: 'Credenciales inválidas' });
+      return res.status(401).json({ error: "Credenciales inválidas" });
     } else {
       // Generar token utilizando la función del módulo jwtVerified
       const token = jwtVerified(respuesta[0].id_cliente);
@@ -268,19 +229,18 @@ exports.loginUsuario = async (req, res) => {
       enviarCorreoElectronico(email_cliente, codigoAcceso);
 
       return res.status(200).json({
-        status:200,
-        success:true,
+        status: 200,
+        success: true,
         token: token,
         rol: respuesta,
-        message: 'Bienvenido, se ha enviado un token a su correo electrónico, por favor, ingréselo en la doble autenticación.',
+        message: "Bienvenido, se ha enviado un token a su correo electrónico, por favor, ingréselo en la doble autenticación.",
       });
     }
   } catch (error) {
-    console.error('Error interno:', error.message);
-    return res.status(500).json({ error: 'Error interno del servidor' });
+    console.error("Error interno:", error.message);
+    return res.status(500).json({ error: "Error interno del servidor" });
   }
 };
-
 
 //controlador para traer usuarios
 /**
@@ -295,7 +255,7 @@ exports.traerUsuarios = async (req, res) => {
   try {
     // Consulta para seleccionar todos los usuarios
     const consulta = "SELECT * FROM clientes";
-    
+
     const usuarios = await baseDeDatosQuery(consulta);
 
     // Verificar si se encontraron usuarios
@@ -329,7 +289,7 @@ exports.traerUnUsuario = async (req, res) => {
 
     // Consulta para seleccionar un usuario por su id_cliente
     const consulta = "SELECT * FROM clientes WHERE id_cliente = ?";
-    
+
     const usuarios = await baseDeDatosQuery(consulta, [id_cliente]);
 
     // Verificar si se encontró el usuario
@@ -363,7 +323,7 @@ exports.traerUnUsuarioPorRol = async (req, res) => {
 
     // Consulta para seleccionar un usuario por su id_cliente
     const consulta = "SELECT * FROM clientes where rol = 1";
-    
+
     const usuarios = await baseDeDatosQuery(consulta, [id_cliente]);
 
     // Verificar si se encontró el usuario
@@ -389,7 +349,3 @@ exports.traerUnUsuarioPorRol = async (req, res) => {
     });
   }
 };
-
-
-
-
