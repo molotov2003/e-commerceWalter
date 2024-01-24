@@ -3,17 +3,14 @@ import HelperForm from "../../helpers/HelperForm";
 import { Global } from "../../helpers/Global";
 import { Navigate, NavLink } from "react-router-dom";
 
-
 import Header from "../private/Header";
 import Footerr from "../private/Footer";
 import logo from "../../assets/img/logo1.png";
 import user from "../../assets/img/user.png";
 import imgnav from "../../assets/img/image1.png";
-import jordan from "../../assets/img/jordan.jpg"
-
+import jordan from "../../assets/img/jordan.jpg";
 
 const Inicio = () => {
-
   // Estado para almacenar la URL de la imagen seleccionada
   const usuario = localStorage.getItem("usuario");
   const userObj = JSON.parse(usuario);
@@ -26,14 +23,14 @@ const Inicio = () => {
   const [estadoca, setEstadoca] = useState(null);
   const [categoriasfil, setCategoriasfil] = useState([]);
 
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState('');
+  const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
 
   //TRAE TODOS LOS ESTUDIOS
   const cargarEstudio = async () => {
     fetch(Global.url + "products/listarProductos", {
       method: "GET",
       headers: {
-        Authorization: userObj
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -51,7 +48,6 @@ const Inicio = () => {
 
   ///traigo los producto filtados por la categoria
   const cargoproductofiltrado = async (producto_id) => {
-
     console.log(producto_id);
     // Limpia la variable de productos
     setProductos([]);
@@ -59,7 +55,7 @@ const Inicio = () => {
     fetch(Global.url + "products/listarporCategoria/" + producto_id, {
       method: "GET",
       headers: {
-        Authorization: userObj
+        Authorization: userObj,
       },
     })
       .then((response) => {
@@ -162,7 +158,9 @@ const Inicio = () => {
           <div className="col-10">
             <br />
             <div className="small-container">
-              <h2 className="title" style={{ color: "white" }} >Productos</h2>
+              <h2 className="title" style={{ color: "white" }}>
+                Productos
+              </h2>
               <select
                 className="form-control"
                 name="producto_id"
@@ -170,7 +168,7 @@ const Inicio = () => {
                 aria-label="Default select example"
                 value={opcionSeleccionada}
                 onChange={(event) => cargoproductofiltrado(event.target.value)}
-                style={{ backgroundColor: '#827D55', color: 'white' }}
+                style={{ backgroundColor: "#827D55", color: "white" }}
               >
                 <option selected> Selecciona una Categorias</option>
                 {categorias.map((categoria) => (
@@ -184,26 +182,69 @@ const Inicio = () => {
               </select>
               <br />
               <div className="row">
-
                 {estado == true ? (
                   productos.map((producto) => {
                     return (
                       <>
-                        <div className="col-3" key={producto.producto_id}>
+                        <div
+                          className="col-3"
+                          style={{
+                            flex: "0 0 400px",
+                            border: "0.5px solid #cfb658",
+                            borderRadius: "1px",
+                          }}
+                          key={producto.producto_id}
+                        >
                           <a href="product_details.html">
-                            <img src={"http://localhost:3900/" + producto.img} />
+                            <img
+                              src={"http://localhost:3900/" + producto.img}
+                              style={{ maxWidth: "100%", height: "300px" }}
+                            />
                           </a>
-                          <h3 style={{ color: "#cfb658" }}>  {producto.nombre_producto}</h3>
-                          <hr />
-                          <p> Descripcion Del Producto: {producto.descripcion_producto}</p>
+                          <h3 style={{ color: "#cfb658", textAlign: "center" }}>
+                            {" "}
+                            {producto.nombre_producto}
+                          </h3>
 
-                          <hr />
-                          <p > Precio del Producto: {producto.precio_producto}</p>
-                          <hr />
-                          <p >Cantidad del Producto: {producto.stock_producto}</p>
-                          <button type="button" style={{ backgroundColor: "#cfb658" }} onClick={() => { handleClick(producto) }
-                          } > <i className="bi bi-bag"></i> </button>
+                          <hr
+                            style={{
+                              borderTop: "1px solid #cfb658",
+                              width: "50%",
+                              margin: "10px auto",
+                            }}
+                          />
+                          <p >
+                            {" "}
+                            Descripcion Del Producto:{" "}
+                            {producto.descripcion_producto}
+                          </p>
 
+                          <p>
+                            {" "}
+                            Precio del Producto: {producto.precio_producto}
+                          </p>
+                          <hr />
+                          <p>
+                            Cantidad del Producto: {producto.stock_producto}
+                          </p>
+                          <button
+                            type="button"
+                            style={{
+                              backgroundColor: "#cfb658",
+                              color: "#fff",
+                              padding: "10px 15px",
+                              borderRadius: "4px",
+                              border: "none",
+                              cursor: "pointer",
+                              display: "block",
+                              margin: "10px auto",
+                            }}
+                            onClick={() => {
+                              handleClick(producto);
+                            }}
+                          >
+                            <i className="bi bi-bag"></i> Añadir al carrito
+                          </button>
                         </div>
                       </>
                     );
@@ -214,12 +255,11 @@ const Inicio = () => {
                       Lo siento Por ahora no hay productos disponibles
                     </h3>
                     <p className="text-center">
-                      Se actualizara automaticamente la pagina al momento de agregar
-                      una.
+                      Se actualizara automaticamente la pagina al momento de
+                      agregar una.
                     </p>
                   </>
                 )}
-
               </div>
             </div>
           </div>

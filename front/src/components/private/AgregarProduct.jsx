@@ -30,7 +30,6 @@ const AgregarProduct = () => {
   // capturo la categoria selecionada
   const [opcionSeleccionada, setOpcionSeleccionada] = useState("");
 
-
   // uso las modales para editar
   const [mostrarModalEditar, setMostrarModalEditar] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
@@ -76,7 +75,6 @@ const AgregarProduct = () => {
   //MODAL PARA EDITAR
   const abrirModalEditar = (producto) => {
     if (
-      
       producto.nombre_producto &&
       producto.descripcion_producto &&
       producto.precio_producto &&
@@ -85,13 +83,12 @@ const AgregarProduct = () => {
     ) {
       setMostrarModalEditar(producto);
       setModalEditar(true);
-      console.log(setModalEditar(true))
+      console.log(setModalEditar(true));
     } else {
       console.error("El producto no se ha editado correctamente");
     }
   };
 
-  
   ////Abrir la modal
   const agregarModalEditar = () => {
     setModalEditar(false);
@@ -402,7 +399,7 @@ const AgregarProduct = () => {
     traerusuarios();
     cargoproductofiltrado();
   }, [modalEditar]);
-console.log(modalEditar)
+  console.log(modalEditar);
   return (
     <>
       <Header />
@@ -428,12 +425,16 @@ console.log(modalEditar)
           encType="multipart/form-data"
         >
           {/* ... Otros campos de formulario ... */}
-
-          <h2>Agregar Producto</h2>
+          <br />
+          <h2 style={{ color: "white", textAlign: "center" }}>
+            Agregar Producto
+          </h2>
           <hr />
 
           <div className="form-wrapper">
-            <label htmlFor="">Id del Producto</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Id del Producto
+            </label>
             <input
               type="number"
               className="form-control"
@@ -444,7 +445,9 @@ console.log(modalEditar)
             />
           </div>
           <div className="form-wrapper">
-            <label htmlFor="">Nombre Del Producto</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Nombre Del Producto
+            </label>
             <input
               className="form-control"
               type="text"
@@ -455,7 +458,9 @@ console.log(modalEditar)
             />
           </div>
           <div className="form-wrapper">
-            <label htmlFor="">Descripcion</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Descripcion
+            </label>
             <input
               className="form-control"
               type="text"
@@ -466,7 +471,9 @@ console.log(modalEditar)
             />
           </div>
           <div className="form-wrapper">
-            <label htmlFor="">Precio</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Precio
+            </label>
             <input
               className="form-control"
               type="text"
@@ -477,7 +484,9 @@ console.log(modalEditar)
             />
           </div>
           <div className="form-wrapper">
-            <label htmlFor="">Cantidad</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Cantidad
+            </label>
             <input
               className="form-control"
               type="text"
@@ -488,7 +497,9 @@ console.log(modalEditar)
             />
           </div>
           <div className="form-wrapper">
-            <label htmlFor="">Agregar Categoria</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Agregar Categoria
+            </label>
             <select
               onChange={(e) => setCategoriass(e.target.value)}
               className="form-control"
@@ -511,7 +522,9 @@ console.log(modalEditar)
           </div>
 
           <div className="form-wrapper">
-            <label htmlFor="">Imagen</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Imagen
+            </label>
             <input
               type="file"
               id="img"
@@ -523,7 +536,20 @@ console.log(modalEditar)
 
           {/* Resto del formulario... */}
 
-          <button type="submit" className="btn btn-success">
+          <button
+            type="submit"
+            className="btn btn-success"
+            style={{
+              backgroundColor: "#cfb658",
+              color: "#fff",
+              padding: "10px 15px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              display: "block",
+              margin: "10px auto",
+            }}
+          >
             Agregar Productos
           </button>
           <br />
@@ -539,11 +565,17 @@ console.log(modalEditar)
           onSubmit={guardarCategoria}
         >
           {/* ... Otros campos de formulario ... */}
+          <div style={{ marginBottom: "70%" }}>
+            <h2 style={{ color: "white", textAlign: "center", marginTop: "0" }}>
+              Agregar Categoria
+            </h2>
+          </div>
 
-          <h2>Agregar Categoria</h2>
           <hr />
-          <div className="form-wrapper">
-            <label htmlFor="">Id del Producto</label>
+          <div className="form-wrapper" style={{ marginTop: "-60%" }}>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Id del Producto
+            </label>
             <input
               type="number"
               className="form-control"
@@ -554,7 +586,9 @@ console.log(modalEditar)
             />
           </div>
           <div className="form-wrapper">
-            <label htmlFor="">Nombre De la Categoria</label>
+            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
+              Nombre De la Categoria
+            </label>
             <input
               className="form-control"
               type="text"
@@ -567,8 +601,20 @@ console.log(modalEditar)
 
           {/* Resto del formulario... */}
 
-          <button type="submit" className="btn btn-success">
-            Agregar Productos
+          <button
+            type="submit"
+            style={{
+              backgroundColor: "#cfb658",
+              color: "#fff",
+              padding: "10px 15px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              display: "block",
+              margin: "10px auto",
+            }}
+          >
+            Agregar Categoria
           </button>
           <br />
           <br />
@@ -580,7 +626,9 @@ console.log(modalEditar)
         <div className="row">
           <div className="col-10">
             <div className="small-container">
-              <h2 className="title">Productos</h2>
+              <h2 className="title" style={{ color: "white" }}>
+                Productos
+              </h2>
 
               <div className="row">
                 <select
@@ -589,6 +637,7 @@ console.log(modalEditar)
                   id="producto_id"
                   aria-label="Default select example"
                   value={opcionSeleccionada}
+                  style={{ backgroundColor: "#827D55", color: "white" }}
                   onChange={(event) =>
                     cargoproductofiltrado(event.target.value)
                   }
@@ -609,26 +658,39 @@ console.log(modalEditar)
                   productos.map((producto) => {
                     return (
                       <>
-                        <div className="col-3" key={producto.producto_id}>
-                          <div
-                            className="id_producto"
-                            id="id_producto"
-                            value={producto.producto_id}
-                          ></div>
+                        <div
+                          className="col-3"
+                          style={{
+                            flex: "0 0 400px",
+                            border: "0.5px solid #cfb658",
+                            borderRadius: "1px",
+                          }}
+                          key={producto.producto_id}
+                        >
                           <a href="product_details.html">
                             <img
                               src={"http://localhost:3900/" + producto.img}
+                              style={{ maxWidth: "100%", height: "300px" }}
                             />
                           </a>
-                          <h3> {producto.nombre_producto}</h3>
-                          <hr />
+                          <h3 style={{ color: "#cfb658", textAlign: "center" }}>
+                            {" "}
+                            {producto.nombre_producto}
+                          </h3>
+
+                          <hr
+                            style={{
+                              borderTop: "1px solid #cfb658",
+                              width: "50%",
+                              margin: "10px auto",
+                            }}
+                          />
                           <p>
                             {" "}
                             Descripcion Del Producto:{" "}
                             {producto.descripcion_producto}
                           </p>
 
-                          <hr />
                           <p>
                             {" "}
                             Precio del Producto: {producto.precio_producto}
@@ -639,24 +701,38 @@ console.log(modalEditar)
                           </p>
                           <button
                             type="button"
-                            className="btn btn-danger"
-                            style={{ margin: "5px" }}
+                            style={{
+                              backgroundColor: "#cfb658",
+                              color: "#fff",
+                              padding: "10px 15px",
+                              borderRadius: "4px",
+                              border: "none",
+                              cursor: "pointer",
+                              display: "block",
+                              margin: "10px auto",
+                            }}
+                          >
+                            <i className="bi bi-pencil-fill"></i> Editar el
+                            producto
+                          </button>
+                          <button
+                            type="button"
+                            style={{
+                              backgroundColor: "#cfb658",
+                              color: "#fff",
+                              padding: "10px 15px",
+                              borderRadius: "4px",
+                              border: "none",
+                              cursor: "pointer",
+                              display: "block",
+                              margin: "10px auto",
+                            }}
                             onClick={() =>
                               EliminarProducto(producto.producto_id)
                             }
                           >
                             {" "}
-                            <i className="bi bi-trash3-fill"> </i>{" "}
-                          </button>
-
-                          <button
-                            type="button"
-                            className="btn btn-success"
-                            data-bs-toggle="modal"
-                            data-bs-target={`#exampleModal${producto.producto_id}`}
-                            onClick={() => abrirModalEditar(producto)}
-                          >
-                            <i className="bi bi-pencil-square"></i>
+                            <i className="bi bi-trash3-fill"> Eliminar </i>
                           </button>
                         </div>
                       </>
@@ -664,10 +740,10 @@ console.log(modalEditar)
                   })
                 ) : (
                   <>
-                    <h3 className="text-center">
-                      Lo siento Por ahora no hay cards 😅
+                    <h3 style={{ color: "white" }} className="text-center">
+                      Lo siento Por ahora no hay cards
                     </h3>
-                    <p className="text-center">
+                    <p style={{ color: "white" }} className="text-center">
                       Se actualizara automaticamente la pagina al momento de
                       agregar una.
                     </p>
@@ -680,85 +756,151 @@ console.log(modalEditar)
 
         <br />
         <br />
-        <h1>Categorias</h1>
+
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-10">
+              <h1 style={{ textAlign: "center", color: "white" }}>
+                Categorias
+              </h1>
+              <br />
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th style={{ color: "white" }} scope="col">
+                      ID Categoria
+                    </th>
+                    <th style={{ color: "white" }} scope="col">
+                      Nombre Categoria
+                    </th>
+                    <th style={{ color: "white" }} scope="col">
+                      Eliminar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categorias.map((categoria) => (
+                    <tr key={categoria.categoria_id}>
+                      <th style={{ color: "white" }} scope="row">
+                        {" "}
+                        {categoria.categoria_id}{" "}
+                      </th>
+                      <td style={{ color: "white" }}>
+                        {categoria.nombre_categoria}
+                      </td>
+                      <td>
+                        {" "}
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          style={{ margin: "5px" }}
+                          onClick={() =>
+                            EliminarCategoria(categoria.categoria_id)
+                          }
+                        >
+                          {" "}
+                          <i className="bi bi-trash3-fill"> </i>{" "}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <br />
         <br />
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">ID Categoria</th>
-              <th scope="col">Nombre Categoria</th>
-              <th scope="col">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categorias.map((categoria) => (
-              <tr key={categoria.categoria_id}>
-                <th scope="row"> {categoria.categoria_id} </th>
-                <td>{categoria.nombre_categoria}</td>
-                <td>
-                  {" "}
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    style={{ margin: "5px" }}
-                    onClick={() => EliminarCategoria(categoria.categoria_id)}
-                  >
-                    {" "}
-                    <i className="bi bi-trash3-fill"> </i>{" "}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
         <br />
-        <br />
-        <h1>usuarios</h1>
-        <br />
-        {usuarios ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">ID Cliente</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Email</th>
-                <th scope="col">Direccion</th>
-                <th scope="col">rol</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {usuarios.map((usuario) => {
-                return (
-                  <tr key={usuario.id_cliente}>
-                    <td scope="row"> {usuario.id_cliente} </td>
-                    <td scope="row"> {usuario.nombre_cliente} </td>
-                    <td scope="row"> {usuario.email_cliente} </td>
-                    <td scope="row"> {usuario.direccion_cliente} </td>
-                    <td scope="row"> {usuario.rol} </td>
-                    <td scope="row"> {usuario.estado} </td>
-                    <td>
-                      {" "}
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        style={{ margin: "5px" }}
-                        onClick={() => EliminarUsuario(usuario.id_cliente)}
-                      >
-                        {" "}
-                        <i className="bi bi-trash3-fill"> </i>{" "}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        ) : (
-          <p>Cargando usuarios...</p>
-        )}
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-10">
+              <h1 style={{ textAlign: "center", color: "white" }}>usuarios</h1>
+              <br />
+
+              {usuarios ? (
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th style={{ color: "white" }} scope="col">
+                        ID Cliente
+                      </th>
+                      <th style={{ color: "white" }} scope="col">
+                        Nombre
+                      </th>
+                      <th style={{ color: "white" }} scope="col">
+                        Email
+                      </th>
+                      <th style={{ color: "white" }} scope="col">
+                        Direccion
+                      </th>
+                      <th style={{ color: "white" }} scope="col">
+                        rol
+                      </th>
+                      <th style={{ color: "white" }} scope="col">
+                        Estado
+                      </th>
+                      <th style={{ color: "white" }} scope="col">
+                        Eliminar
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {usuarios.map((usuario) => {
+                      return (
+                        <tr key={usuario.id_cliente}>
+                          <td style={{ color: "white" }} scope="row">
+                            {" "}
+                            {usuario.id_cliente}{" "}
+                          </td>
+                          <td style={{ color: "white" }} scope="row">
+                            {" "}
+                            {usuario.nombre_cliente}{" "}
+                          </td>
+                          <td style={{ color: "white" }} scope="row">
+                            {" "}
+                            {usuario.email_cliente}{" "}
+                          </td>
+                          <td style={{ color: "white" }} scope="row">
+                            {" "}
+                            {usuario.direccion_cliente}{" "}
+                          </td>
+                          <td style={{ color: "white" }} scope="row">
+                            {" "}
+                            {usuario.rol}{" "}
+                          </td>
+                          <td style={{ color: "white" }} scope="row">
+                            {" "}
+                            {usuario.estado}{" "}
+                          </td>
+                          <td>
+                            {" "}
+                            <button
+                              type="button"
+                              className="btn btn-danger"
+                              style={{ margin: "5px" }}
+                              onClick={() =>
+                                EliminarUsuario(usuario.id_cliente)
+                              }
+                            >
+                              {" "}
+                              <i className="bi bi-trash3-fill"> </i>{" "}
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <p>Cargando usuarios...</p>
+              )}
+            </div>
+          </div>
+        </div>
+
         <br />
       </div>
       {modalEditar && mostrarModalEditar && (
