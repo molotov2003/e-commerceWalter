@@ -15,7 +15,7 @@
   
   input, textarea, select, button {
     font-family: "Muli-Regular";
-    color: #333;
+    color: #cfb658;
     font-size: 13px; }
   
   p, h1, h2, h3, h4, h5, h6, ul {
@@ -58,7 +58,7 @@
     font-family: "Muli-Bold";
     text-align: center;
     margin-bottom: 32px;
-    color: #333;
+    color: #cfb658;
     letter-spacing: 2px; }
 
   .inner {
@@ -67,7 +67,7 @@
     margin: auto;
     padding-top: 68px;
     padding-bottom: 48px;
-    background: url("../img/registration-form-2.jpg") ; 
+    /* background: url("../img/logo1.png") ;  */
     background-size: 100%;
     background-repeat: no-repeat;
     
@@ -81,7 +81,7 @@
       font-family: "Muli-Bold";
       text-align: center;
       margin-bottom: 32px;
-      color: #333;
+      color: #cfb658;
       letter-spacing: 2px; }
   
   form {

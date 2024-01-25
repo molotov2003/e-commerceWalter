@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import HelperForm from "../../helpers/HelperForm";
 import { Global } from "../../helpers/Global";
@@ -9,7 +8,7 @@ import img from "../../assets/img/bg-registration-form-2.jpg";
 
 const Login = () => {
   //REDIRECCIONA
-  
+
   const { form, cambiar } = HelperForm({});
   const [, setGuardado] = useState("");
   const [navLink, setnavLink] = useState(false);
@@ -53,10 +52,10 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
-      
-      console.log(request)
+
+      console.log(request);
       const data = await request.json();
-      console.log(data)
+      console.log(data);
       if (data.success === true) {
         //VEREFICO SI EL USUARIO EXISTE
         const usuarioExistente = localStorage.getItem("usuarios");
@@ -116,7 +115,9 @@ const Login = () => {
             <h3>Iniciar sesion</h3>
 
             <div className="form-wrapper">
-              <label htmlFor="">Email</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>
+                Email
+              </label>
               <input
                 type="email"
                 name="email_cliente"
@@ -127,7 +128,9 @@ const Login = () => {
               />
             </div>
             <div className="form-wrapper">
-              <label htmlFor="">Password</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>
+                Password
+              </label>
               <input
                 type="password"
                 name="password_cliente"
@@ -138,12 +141,32 @@ const Login = () => {
               />
             </div>
 
-            <button type="submit" className="btn btn-success">Iniciar Sesion</button>
-<br />
-            <a style={{color:"black"}} href="./Registro">¿aun no tienes cuenta?</a>
+            
+
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "#cfb658",
+                color: "#fff",
+                padding: "10px 15px",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer",
+                display: "block",
+                margin: "10px auto",
+              }}
+            >
+              Iniciar sesion
+            </button>
+            <br />
+            <a style={{ color: "white" }} href="./Registro">
+              ¿aun no tienes cuenta?
+            </a>
           </form>
-          <br /><br />
-          <br /><br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     </>

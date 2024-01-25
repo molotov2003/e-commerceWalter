@@ -96,7 +96,7 @@ const Registro = () => {
 
             <h3>Registrarse</h3>
             <div className="form-wrapper">
-              <label htmlFor="">cedula</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>cedula</label>
               <input type="text"
                     name="id_cliente"
                     id="id_cliente"
@@ -106,7 +106,7 @@ const Registro = () => {
                     required/>
             </div>
             <div className="form-wrapper">
-              <label htmlFor="">Nombre</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>Nombre</label>
               <input type="text"
                     name="nombre_cliente"
                     id="nombre_cliente"
@@ -116,7 +116,7 @@ const Registro = () => {
                     required/>
             </div>
             <div className="form-wrapper">
-              <label htmlFor="">Email</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>Email</label>
               <input type="text"
                     name="email_cliente"
                     id="email_cliente"
@@ -126,7 +126,7 @@ const Registro = () => {
                     required />
             </div>
             <div className="form-wrapper">
-              <label htmlFor="">Direccion</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>Direccion</label>
               <input type="text"
                     name="direccion_cliente"
                     id="direccion_cliente"
@@ -136,7 +136,7 @@ const Registro = () => {
                     required  />
             </div>
             <div className="form-wrapper">
-              <label htmlFor="">Password</label>
+              <label htmlFor="" style={{ color: "#cfb658" }}>Password</label>
               <input type="text"
                     name="password_cliente"
                     id="password_cliente"
@@ -145,9 +145,24 @@ const Registro = () => {
                     required  />
             </div>
 
-            <button type="submit" className="btn btn-success">Registrarse</button>
+          
+            <button
+              type="submit"
+              style={{
+                backgroundColor: "#cfb658",
+                color: "#fff",
+                padding: "10px 15px",
+                borderRadius: "4px",
+                border: "none",
+                cursor: "pointer",
+                display: "block",
+                margin: "10px auto",
+              }}
+            >
+              Registrate
+            </button>
             <br />
-            <a style={{color:"black"}} href="./">¿Ya tienes cuenta?</a>
+            <a style={{color:"white"}} href="./">¿Ya tienes cuenta?</a>
           </form>
         </div>
       </div>

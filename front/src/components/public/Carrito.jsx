@@ -5,7 +5,20 @@ import Footerr from "../private/Footer";
 import logo from "../../assets/img/logo1.png";
 import user from "../../assets/img/user.png";
 import imgnav from "../../assets/img/image1.png";
+import { useNavigate } from "react-router-dom";
+import UseAuth from "../../helpers/UseAuth";
+
 const Carrito = () => {
+  const { setAutenticado } = UseAuth();
+  const { Autenticado } = UseAuth();
+
+  //REDIRIGE
+  console.log(Autenticado);
+  //ALERTA PARA CERRAR SESION
+  const navigate = useNavigate();
+  const usuario = localStorage.getItem("productos");
+  let productos = JSON.parse(usuario);
+  console.log(productos[0].nombre);
   return (
     <>
       <Header />
@@ -21,63 +34,49 @@ const Carrito = () => {
                   <th style={{ color: "white" }}>Subtotal</th>
                 </tr>
 
-                <tr>
-                  <td>
-                    <div className="cart-info">
-                      <img src="images/buy-1.jpg" />
-                      <div>
-                        <p style={{ color: "white" }}>Red Printed T-Shirt</p>
-                        <small style={{ color: "white" }}>Price: $50.00</small>
-                        <br />
-                        <a style={{ color: "white" }} href="">
-                          Remove
-                        </a>
+              
+
+                {productos.length > 0 ? (
+                  
+                  productos.map((producto) => {
+                    
+                    return <>
+                    <tr key={producto.id}>
+                    <td>
+                      <div className="cart-info">
+                        <img src={"http://localhost:3900/" + producto.imagen} style={{ width: "200px", height: "auto" }} />
+                        <div>
+                          <h2 style={{ color: "#cfb658" }}>
+                            {producto.nombre}
+                          </h2>
+                          <small style={{ color: "white" }}>
+                            Precio: {producto.precio}
+                          </small>
+                          <br />
+                          <a style={{ color: "white" }} href="">
+                            Remove
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    <input type="number" value="1" />
-                  </td>
-                  <td style={{ color: "white" }}>$50.00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="cart-info">
-                      <img src="images/buy-2.jpg" />
-                      <div>
-                        <p style={{ color: "white" }}>Red Printed T-Shirt</p>
-                        <small style={{ color: "white" }}>Price: $50.00</small>
-                        <br />
-                        <a style={{ color: "white" }} href="">
-                          Remove
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <input type="number" value="1" />
-                  </td>
-                  <td style={{ color: "white" }}>$50.00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="cart-info">
-                      <img src="images/buy-3.jpg" />
-                      <div>
-                        <p style={{ color: "white" }}>Red Printed T-Shirt</p>
-                        <small style={{ color: "white" }}>Price: $50.00</small>
-                        <br />
-                        <a style={{ color: "white" }} href="">
-                          Remove
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <input type="number" value="1" />
-                  </td>
-                  <td style={{ color: "white" }}>$50.00</td>
-                </tr>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        min={1}
+                        max={producto.cantidadMaxima}
+                        style={{ width: "50px" }}
+                        
+
+                      />
+                    </td>
+                    <td style={{ color: "white" }}>$50.00</td>
+                  </tr></>;
+                  })
+                ) : (
+                  <>
+                     <h1>No hay productos</h1>
+                  </>
+                )}
               </table>
               <div className="total-price">
                 <table>
@@ -106,7 +105,7 @@ const Carrito = () => {
                         cursor: "pointer",
                         display: "block",
                         margin: "10px auto",
-                        marginLeft:"50%"
+                        marginLeft: "50%",
                       }}
                     >
                       <i className="bi bi-bag"></i> Añadir al carrito
