@@ -129,18 +129,16 @@ exports.listarEncabezados = async (req, res) => {
         };
 
         // Consulta para obtener detalles de la compra
-        const Detalle = await baseDeDatosQuery(`SELECT productos.nombre_producto, productos.precio_producto, encabezado.cantidad,encabezado.total
-        FROM productos
-        INNER JOIN encabezado ON encabezado.idEncabezado = ${encabezadoRows.Maximo}`);
+        const Detalle = await baseDeDatosQuery(`SELECT FechayHora,total,cantidad,idEncabezado FROM encabezado WHERE idEncabezado = ${encabezadoRows.Maximo}`);
 
         // Construir la tabla de detalles
         let detalleTabla = "";
         for (let i = 0; i < Detalle.length; i++) {
             detalleTabla +=
                 `<tr>
-            <td>${Detalle[i].nombre_producto}</td>
+            <td>${Detalle[i].idEncabezado}</td>
+            <td>${Detalle[i].FechayHora.toString()}</td>
             <td>${Detalle[i].cantidad}</td>
-            <td>$${formatearPrecio((Detalle[i]?.precio_producto ?? 0).toString())}</td>
             <td>$${formatearPrecio((Detalle[i]?.total ?? 0).toString())}</td>
         </tr>`;
         }
@@ -259,9 +257,9 @@ exports.listarEncabezados = async (req, res) => {
               <table>
                 <thead>
                   <tr>
-                    <th>Producto</th>
+                    <th>ID</th>
+                    <th>Fecha</th>
                     <th>Cantidad</th>
-                    <th>Precio Unitario</th>
                     <th>Total</th>
                   </tr>
                 </thead>
