@@ -12,7 +12,7 @@ const Header = () => {
   const { Autenticado } = UseAuth();
 
   //REDIRIGE
-  console.log(Autenticado);
+ 
   //ALERTA PARA CERRAR SESION
   const navigate = useNavigate();
   const usuario = localStorage.getItem("rol");
@@ -20,7 +20,7 @@ const Header = () => {
 
   //Cierro sesion
   const cerrarSesion = (event) => {
-    console.log("entro");
+   
 
     Swal.fire({
       title: "Estas seguro?",

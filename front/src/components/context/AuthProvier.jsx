@@ -15,8 +15,7 @@ export const AuthProvider = ({ children }) => {
 
     const rol = localStorage.getItem("rol");
     
-    console.log(rol)
-    console.log(usuario)
+   
     try {
       const userObj = JSON.parse(usuario);
      
@@ -24,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       //   return false;
         
       // }
-      console.log("dfdf",userObj)
+   
       const request = await fetch(
         Global.url + "users/listarunUsuario/" + userObj.id_cliente,
         {

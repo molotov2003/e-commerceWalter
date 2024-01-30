@@ -4,7 +4,7 @@ import { Global } from "../../helpers/Global";
 import { Navigate, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import img from "../../assets/img/bg-registration-form-2.jpg";
+import img from "../../assets/img/logo1.png";
 
 const Login = () => {
   //REDIRECCIONA
@@ -100,11 +100,12 @@ const Login = () => {
   }
   return (
     <>
-      <div className="wrapperr">
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-3 mb-3">
+        <div className="wrapperr">
         <div className="inner">
-          <br />
-          <br />
-          <br />
+          
           <form
             className="custom-form hero-form"
             action="#"
@@ -163,12 +164,16 @@ const Login = () => {
               ¿aun no tienes cuenta?
             </a>
           </form>
-          <br />
-          <br />
-          <br />
-          <br />
+        
         </div>
       </div>
+        </div>
+        <div className="col-md-5 mb-3">
+          <img src={img} alt="" />
+        </div>
+      </div>
+    </div>
+     
     </>
   );
 };

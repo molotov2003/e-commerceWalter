@@ -40,7 +40,7 @@
   
   .wrapperr {
     min-height: 100vh;
-    background-size: cover;
+    
     background-repeat: no-repeat;
     display: flex;
     align-items: center; }
@@ -50,7 +50,7 @@
     min-width: 850px;
     margin: auto;
     padding-top: 68px;
-    padding-bottom: 48px;
+  
    }
    .innerr h3 {
     text-transform: uppercase;
@@ -64,15 +64,14 @@
   .inner {
     min-width: 850px;
     
-    margin: auto;
+    
     padding-top: 68px;
     padding-bottom: 48px;
     /* background: url("../img/logo1.png") ;  */
     background-size: 100%;
     background-repeat: no-repeat;
     
-  padding: 0;
-    
+  
   }
     
     .inner h3 {
@@ -85,8 +84,8 @@
       letter-spacing: 2px; }
   
   form {
-    width: 50%;
-    padding-left: 45px; }
+    width: 70%;
+    padding-left: 140px; }
   
   .form-group {
     display: flex; }

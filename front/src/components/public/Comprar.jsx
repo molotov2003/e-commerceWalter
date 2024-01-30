@@ -179,13 +179,62 @@ const AgregarProduct = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImagen(file);
+
+
+  const fechaActual = new Date();
+  const fechaActualString = fechaActual.toISOString().split('T')[0];
+  console.log(fechaActualString);
+
+
+   /////Agregar el encabezado
+   const encabezado = async (e) => {
+    e.preventDefault();
+
+    let total = 1;
+    let idestado =1;
+    let idmetodo =1
+    let idusuario =1;
+    const formData = new FormData();
+
+    formData.append("FechayHora", fechaActual);
+    formData.append("total", total );
+    formData.append("idEstado", idestado);
+    formData.append("idUsuario", idusuario);
+    formData.append("idMetodo", idmetodo);
+    
+    console.log(formData);
+    try {
+      const request = await fetch(Global.url + "encabezado/AgregarEncabezado", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: userObj,
+        },
+      });
+
+      console.log(userObj);
+      const data = await request.json();
+
+      if (data.status == 200) {
+        // MENSAJE EXITOSO
+        console.log(data);
+        setGuardado("Guardado");
+        mostrarAlert("Se ha agregado correctamente");
+      } else {
+        // MENSAJE EXITOSO
+        console.log(data);
+        setGuardado("Guardado");
+        mostrarAlert("Se ha agregado correctamente");
+      }
+    } catch (error) {
+      // MENSAJE SI HAY PROBLEMA DEL SERVIDOR
+      mostrarErrorAlert(
+        "Algo salió mal. Por favor, inténtelo de nuevo más tarde."
+      );
+    }
   };
 
   //////////////////////////////////Agregar Productos
-
   const guardarCards = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -214,7 +263,7 @@ const AgregarProduct = () => {
         // MENSAJE EXITOSO
         console.log(data);
         setGuardado("Guardado");
-        mostrarErrorAlert("Ha ocurrido un error");
+        mostrarAlert("Se ha agregado correctamente");
       } else {
         // MENSAJE EXITOSO
         console.log(data);
@@ -521,18 +570,7 @@ const AgregarProduct = () => {
             </select>
           </div>
 
-          <div className="form-wrapper">
-            <label style={{ color: "white", textAlign: "center" }} htmlFor="">
-              Imagen
-            </label>
-            <input
-              type="file"
-              id="img"
-              name="img"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </div>
+          
 
           {/* Resto del formulario... */}
 
@@ -562,7 +600,7 @@ const AgregarProduct = () => {
           action="#"
           method="Post"
           role="form"
-          onSubmit={guardarCategoria}
+          onSubmit={encabezado}
         >
           {/* ... Otros campos de formulario ... */}
           <div style={{ marginBottom: "70%" }}>

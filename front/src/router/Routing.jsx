@@ -5,6 +5,7 @@ import Registro from "../components/layaout/Registro";
 import Inicio from "../components/public/Inicioo";
 import Carrito from "../components/public/Carrito";
 import Producto from "../components/public/Producto";
+
 import AgregarProduct from "../components/private/AgregarProduct";
 import Error from "../components/private/Error";
 import LayoutPublico from "../components/layaout/LayoutPublic";
@@ -23,10 +24,13 @@ const Routing = () => {
             <Route path="/Inicio" element={<Inicio />}></Route>
             <Route path="/Carrito" element={<Carrito />}></Route>
             <Route path="/AgregarProduct" element={<AgregarProduct />}></Route>
+            <Route path="/Producto" element={<Producto />}></Route>
+           
+            
           </Route>
 
           <Route path="/" element={<LayoutPrivada />}>
-            <Route path="/Producto" element={<Producto />}></Route>
+           
             {/*Rutas privadas*/}
          
           </Route>

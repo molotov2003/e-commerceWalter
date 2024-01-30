@@ -3,6 +3,8 @@ import HelperForm from "../../helpers/HelperForm";
 import { Global } from "../../helpers/Global";
 import { NavLink, useNavigate } from "react-router-dom";
 
+import img from "../../assets/img/logo1.png";
+
 import Swal from "sweetalert2";
 
 const Registro = () => {
@@ -86,7 +88,9 @@ const Registro = () => {
   };
   return (
     <>
-      <div className="wrapperr">
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-3 mb-3"><div className="wrapperr">
         <div className="inner">
           <form className="custom-form hero-form"
             action="#"
@@ -165,7 +169,11 @@ const Registro = () => {
             <a style={{color:"white"}} href="./">¿Ya tienes cuenta?</a>
           </form>
         </div>
+      </div></div>
+        <div className="col-md-5 mb-3">   <img src={img} alt="" /></div>
       </div>
+    </div>
+      
     </>
   );
 }
