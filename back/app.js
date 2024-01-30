@@ -4,6 +4,8 @@ const app = express(); //creamos nuestra aplicacion llamando el metodo construct
 const usuariosRoutes=require("./Routes/Usuarios")
 const productosRoutes=require("./Routes/Productos")
 const categoriaRoutes=require("./Routes/categorias")
+const metodosPago=require("./Routes/metodosPago")
+const encabezadoRoutes=require("./Routes/encabezado")
 const bodyParser=require("body-parser")
 const path =require("path")
 const cors = require('cors'); // Importa el middleware cors
@@ -32,6 +34,13 @@ app.use("/products",productosRoutes)
 
 //ruta categorias
 app.use("/categorias",categoriaRoutes)
+
+//ruta metodosDePago
+app.use("/metodosPago",metodosPago)
+
+//ruta encabezado
+
+app.use("/encabezado",encabezadoRoutes)
 
 
 app.listen("3900", () => {
