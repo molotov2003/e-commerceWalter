@@ -16,5 +16,6 @@ router.delete("/eliminarCategoria/:categoria_id",auth,encabezadoControlador.elim
 router.get("/listarEncabezado",auth,encabezadoControlador.listarEncabezados)
 router.get("/listarEncabezadoUsuario/:idUsuario",auth,encabezadoControlador.listarEncabezadosUsuario)
 router.post("/EnviarCorreoFactura",auth,encabezadoControlador.enviarCorreoFactura)
+router.post("/AgregarEncabezado",auth,encabezadoControlador.insertarEncabezado)
 
 module.exports=router
