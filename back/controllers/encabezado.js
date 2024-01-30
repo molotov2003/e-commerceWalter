@@ -305,27 +305,6 @@ exports.listarEncabezados = async (req, res) => {
     }
 };
 
-
-exports.AgregarEncabezados = async (req, res) => {
-  try {
-    const { FechayHora, total, idEstado } = req.body; // Ajusta los nombres de los campos según tu modelo
-
-    // Realizar la inserción en la base de datos
-    const insertQuery = `INSERT INTO Encabezado (FechayHora, total, idEstado) VALUES (?, ?, ?)`;
-    const result = await baseDeDatos.query(insertQuery, [FechayHora, total, idEstado]);
-
-    if (result.affectedRows > 0) {
-      // La inserción fue exitosa
-      res.send({ id: 200, mensaje: "Encabezado Agregado" });
-    } else {
-      // No se insertaron filas, probablemente debido a un problema
-      res.send({ id: 400, mensaje: "No se pudo agregar el encabezado" });
-    }
-  } catch (error) {
-    res.send({ id: 400, mensaje: error.message });
-  }
-};
-
 exports.insertarEncabezado = async (req, res) => {
   try {
     const data = {
