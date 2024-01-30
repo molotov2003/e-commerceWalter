@@ -336,8 +336,7 @@ const AgregarProduct = () => {
       .then((data) => {
         setProductos(data.productos);
 
-        window.location.reload();
-        return <Navigate to="/AgregarProduct" />;
+        
       })
       .catch((error) => {
         mostrarErrorAlert(

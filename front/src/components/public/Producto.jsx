@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, json } from "react-router-dom";
 import React, { useEffect,useState  } from "react";
 import Header from "../private/Header";
 import Footerr from "../private/Footer";
@@ -14,6 +14,8 @@ const Producto = () => {
   /// traigo el token
   const usuarioo = localStorage.getItem("usuario");
   const userObj = JSON.parse(usuarioo);
+
+
 
   const mostrarAlert = (message) => {
     Swal.fire({
@@ -40,17 +42,22 @@ const Producto = () => {
   console.log(Autenticado);
   //ALERTA PARA CERRAR SESION
   const navigate = useNavigate();
+
+  /// triago todo de local storage
   const usuario = localStorage.getItem("rol");
   let rol = JSON.parse(usuario);
 
+  const productos = localStorage.getItem("productos");
+  let pro = JSON.parse(productos);
+
+  const total = localStorage.getItem("total");
+  let to = JSON.parse(total);
 
   const [id, setId] = useState("");
   const [, setGuardado] = useState("");
 
     
-  console.log(id)
-  console.log(rol[0].id_cliente)
-  console.log(userObj)
+   console.log(to)
   /////////////////// Listar los metodos de pago
   const traerCategorias = async () => {
     try {
@@ -74,45 +81,32 @@ const Producto = () => {
     }
   };
 
-
-  
- 
-
-
    /////Agregar el encabezado
    const encabezado = async (e) => {
-
     e.preventDefault();
     const fechaActual = new Date();
     const fechaActualString = fechaActual.toISOString().split('T')[0];
     console.log(fechaActualString);
-    let total = 1;
+    let total = to;
     let idestado =1;
-    let idmetodo =1
-    let idusuario =1;
-    let cantidad =1;
-    const formData = new FormData();
-
-    formData.append("FechayHora", fechaActual);
-    formData.append("total", total );
-    formData.append("idEstado", idestado);
-    formData.append("idUsuario", idusuario);
-    formData.append("idMetodo", idmetodo);
-    formData.append("cantidad", cantidad);
-    console.log(formData);
+    let idmetodo =id
+    let idusuario = rol[0].id_cliente ;
+    let cantidad = pro[0].cantidad;        
     try {
       const request = await fetch(Global.url + "encabezado/AgregarEncabezado", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify({FechayHora:fechaActual,total:total,idEstado:idestado,idUsuario:idusuario,idMetodo:idmetodo,cantidad:cantidad}),
         headers: {
           Authorization: userObj,
+          "Content-Type": "application/json",
         },
-      });
-
-      console.log(userObj);
+      });     
       const data = await request.json();
-
-      if (data.status == 200) {
+      console.log(await request)
+      console.log("esta es la data",data)
+      console.log(data.status)
+      
+      if (data.id != 200) {
         // MENSAJE EXITOSO
         console.log(data);
         setGuardado("Guardado");
@@ -120,9 +114,31 @@ const Producto = () => {
       } else {
         // MENSAJE EXITOSO
         console.log(data);
-        setGuardado("Guardado");
-        mostrarAlert("Se ha agregado correctamente");
+       
+        mostrarErrorAlert("Ha ocurrido un error");
       }
+    } catch (error) {
+      // MENSAJE SI HAY PROBLEMA DEL SERVIDOR
+      mostrarErrorAlert(
+        "Algo salió mal. Por favor, inténtelo de nuevo más tarde."
+      );
+    }
+
+    //agrego la factura
+    let id_cliente = rol[0].id_cliente
+    try {
+      const request = await fetch(Global.url + "encabezado/EnviarCorreoFactura", {
+        method: "POST",
+        body: JSON.stringify({id_cliente:id_cliente,idMetodo:idmetodo}),
+        headers: {
+          Authorization: userObj,
+          "Content-Type": "application/json",
+        },
+      });     
+      const data = await request.json();
+      console.log(await request)
+      console.log("esta es la data",data)
+      
     } catch (error) {
       // MENSAJE SI HAY PROBLEMA DEL SERVIDOR
       mostrarErrorAlert(
@@ -243,6 +259,7 @@ const Producto = () => {
            onChange={(e) => setId(e.target.value)}
             className="form-control"
             name="idMetodo"
+            id="idMetodo"
             aria-label="Default select example"
           >
             <option selected>Seleccionar metodo de pago</option>
@@ -279,7 +296,7 @@ const Producto = () => {
         </button>
       </form>
 
-      <Footerr />
+    
     </>
   );
 };

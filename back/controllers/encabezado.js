@@ -138,7 +138,7 @@ exports.listarEncabezados = async (req, res) => {
                 `<tr>
             <td>${Detalle[i].idEncabezado}</td>
             <td>${Detalle[i].FechayHora.toString()}</td>
-            <td>${Detalle[i].cantidad}</td>
+          
             <td>$${formatearPrecio((Detalle[i]?.total ?? 0).toString())}</td>
         </tr>`;
         }
@@ -259,7 +259,7 @@ exports.listarEncabezados = async (req, res) => {
                   <tr>
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Cantidad</th>
+                   
                     <th>Total</th>
                   </tr>
                 </thead>
@@ -291,7 +291,7 @@ exports.listarEncabezados = async (req, res) => {
         // Configuración del correo
         const info = await transporter.sendMail({
             from: `SOPORTE DE COMPRA #${encabezadoRows.Maximo} <am17222001@gmail.com>`,
-            to: `afelipecarmona2003@gmail.com,${userRows.email_cliente},afelipecarmona2003@gmail.com`,
+            to: `${userRows.email_cliente}`,
             subject: "Confirmación de Compra ✔",
             text: "Espero que te encuentres bien :)",
             html: html,
