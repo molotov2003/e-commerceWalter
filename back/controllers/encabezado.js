@@ -129,7 +129,9 @@ exports.listarEncabezados = async (req, res) => {
         };
 
         // Consulta para obtener detalles de la compra
-        const Detalle = await baseDeDatosQuery(`SELECT productos.nombre_producto, detalles_pedido.cantidad, productos.precio_producto, detalles_pedido.subtotal FROM productos INNER JOIN detalles_pedido ON detalles_pedido.producto_id = productos.producto_id INNER JOIN encabezado ON encabezado.idEncabezado = detalles_pedido.detalle_id AND detalles_pedido.detalle_id= ${encabezadoRows.Maximo}`);
+        const Detalle = await baseDeDatosQuery(`SELECT productos.nombre_producto, productos.precio_producto, encabezado.cantidad,encabezado.total
+        FROM productos
+        INNER JOIN encabezado ON encabezado.idEncabezado = ${encabezadoRows.Maximo}`);
 
         // Construir la tabla de detalles
         let detalleTabla = "";
@@ -139,7 +141,7 @@ exports.listarEncabezados = async (req, res) => {
             <td>${Detalle[i].nombre_producto}</td>
             <td>${Detalle[i].cantidad}</td>
             <td>$${formatearPrecio((Detalle[i]?.precio_producto ?? 0).toString())}</td>
-            <td>$${formatearPrecio((Detalle[i]?.subtotal ?? 0).toString())}</td>
+            <td>$${formatearPrecio((Detalle[i]?.total ?? 0).toString())}</td>
         </tr>`;
         }
 
@@ -312,7 +314,8 @@ exports.insertarEncabezado = async (req, res) => {
       total: req.body.total,
       idEstado:req.body.idEstado,
       idUsuario:req.body.idUsuario,
-      idMetodo:req.body.idMetodo
+      idMetodo:req.body.idMetodo,
+      cantidad:req.body.cantidad
 
      
     };
@@ -328,7 +331,7 @@ exports.insertarEncabezado = async (req, res) => {
     }
     // Consulta SQL parametrizada
     const sql =
-      "INSERT INTO Encabezado (FechayHora, total, idEstado,idUsuario,idMetodo) VALUES (?, ?, ?,?,?)";
+      "INSERT INTO encabezado (FechayHora, total, idEstado,idUsuario,idMetodo,cantidad) VALUES (?, ?, ?,?,?,?)";
     baseDeDatos.query(
       sql,
       [
@@ -337,6 +340,7 @@ exports.insertarEncabezado = async (req, res) => {
         data.idEstado,
         data.idUsuario,
         data.idMetodo,
+        data.cantidad,
         
       ],
       (error, response) => {
@@ -370,8 +374,3 @@ exports.insertarEncabezado = async (req, res) => {
 
 
 
-
-
-  
-
-  
