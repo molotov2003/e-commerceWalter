@@ -110,7 +110,7 @@ const Producto = () => {
         // MENSAJE EXITOSO
         console.log(data);
         setGuardado("Guardado");
-        mostrarAlert("Se ha agregado correctamente");
+        mostrarAlert("Se ha Generado la compra Correctamente");
       } else {
         // MENSAJE EXITOSO
         console.log(data);

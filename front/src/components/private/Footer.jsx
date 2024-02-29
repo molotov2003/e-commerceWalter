@@ -27,17 +27,8 @@ const footer = () => {
               Explore exclusive finds at our online store. Elevate your shopping experience with unique treasures. <br />Welcome to your go-to destination for style and more!
               </p>
             </div>
-            <div className="footer-col-3">
-              <h3>Useful Links</h3>
-              <ul>
-                <li>Coupons</li>
-                <li>Blog Post</li>
-                <li>Return Policy</li>
-                <li>Join Affiliate</li>
-              </ul>
-            </div>
             <div className="footer-col-4">
-              <h3>Follow Us</h3>
+              <h3>Enlaces Directos</h3>
               <ul>
                 <li>Facebook</li>
                 <li>Twitter</li>

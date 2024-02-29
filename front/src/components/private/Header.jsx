@@ -50,7 +50,7 @@ const Header = () => {
       <div className="navbarr">
         <nav>
           <ul id="MenuItems">
-            <a href="/inicio">Home</a>
+            <a href="/inicio">Inicio</a>
             <a href="/carrito">Sobre Nosotros</a>
             <img src={logo} alt="" style={{ maxWidth: "100px" }} />
             <a href="/carrito">carrito</a>
@@ -73,7 +73,7 @@ const Header = () => {
           <div className="row no-gutters">
             <div className="" style={{ marginTop: "350px", marginLeft:"50%" }}>
               {/* Ajusté la posición del texto para que esté más abajo */}
-              <h1>Unique Experience</h1>
+              <h1>Experiencia unica En Urban Pulse Store</h1>
             </div>
           </div>
         </div>

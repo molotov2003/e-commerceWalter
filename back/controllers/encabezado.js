@@ -102,6 +102,16 @@ exports.listarEncabezados = async (req, res) => {
         let id_cliente = req.body.id_cliente;
         let idMetodo = req.body.idMetodo;
 
+        var fechaActual = new Date();
+
+// Obtener las partes de la fecha por separado
+var dia = fechaActual.getDate();
+var mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0, por lo que se suma 1
+var año = fechaActual.getFullYear();
+
+// Formatear la fecha según tu preferencia
+var fechaFormateada = dia + '/' + mes + '/' + año;
+
         // Consulta para obtener información del usuario
         const userQuery = `SELECT * FROM clientes WHERE id_cliente=${id_cliente}`;
         const [userRows] = await baseDeDatosQuery(userQuery);
@@ -243,9 +253,7 @@ exports.listarEncabezados = async (req, res) => {
                   "."
                 )}</strong>
               </p>
-              <p>Fecha y Hora de la Compra: <strong>${
-                req.body.FechayHora
-              }</strong></p>
+              <p>Fecha y Hora de la Compra: <strong>${fechaFormateada}</strong></p>
         
               <h3>Datos del Usuario</h3>
                <p>Identificación: <strong>${req.body.id_cliente}</strong></p>
